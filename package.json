@@ -4,7 +4,12 @@
   "description": "- プログラミングの教育現場で、問題とそれに対して提出されたコードを閲覧するアプリ - REST API / GraphQLの性能比較用アプリでもあります。",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "transpile": "tsc",
+    "build": "run-s lint format transpile",
+    "start": "node dist/Backend/index.js"
   },
   "repository": "https://github.com/Hachijin-Okamoto/ProgCodeHub.git",
   "keywords": [],
@@ -12,9 +17,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^25.0.1",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",
@@ -22,6 +29,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-unused-imports": "^4.3.0",
     "prettier": "^3.7.4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.49.0"
   }
 }
