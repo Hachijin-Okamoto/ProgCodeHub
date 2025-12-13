@@ -1,23 +1,48 @@
-export const getQuestions = (): number[] => {
-  return getDammyIdData();
+import { Request, Response } from 'express';
+
+class NotimplementedError extends Error {
+    constructor(message = "NotImplemented") {
+        super(message);
+        this.name = "NotImplementedError";
+    }
+}
+
+const notImplemented = <T>(): T => {
+    throw new NotimplementedError();
 };
 
-export const createQuestion = (_question: string): number => {
-    return -1;
+export const getAllProblems = (_req: Request, _res: Response): number[] => {
+    return notImplemented<number[]>();
+};
+
+export const createNewQuestion = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
 }
 
-export const getSubmissionsSubmitIdQuestion = (_questionId: number): number[] => {
-    return getDammyIdData();
+export const getIdProblem = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
 }
 
-const getDammyIdData = (): number[] => {
-    return [1, 2, 3];
+export const editIdProblem = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
 }
 
-export const getSubmissions = (): number[] => {
-    return getDammyIdData();
+export const deleteIdProblem = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
 }
 
-export const createSubmission = (_submission: string): number => {
-    return -1;
+export const getAllSubmissionsFromIdProblem = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
+}
+
+export const getAllSubmissions = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
+}
+
+export const createNewSubmission = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
+}
+
+export const getIdSubmission = (_req: Request, _res: Response): number => {
+    return notImplemented<number>();
 }
