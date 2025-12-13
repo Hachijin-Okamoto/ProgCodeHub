@@ -1,5 +1,15 @@
 import express from 'express';
-import { createNewQuestion, createNewSubmission, deleteIdProblem, editIdProblem, getAllProblems, getAllSubmissions, getAllSubmissionsFromIdProblem, getIdProblem, getIdSubmission } from './controller';
+import {
+  createNewProblem,
+  createNewSubmission,
+  deleteIdProblem,
+  editIdProblem,
+  getAllProblems,
+  getAllSubmissions,
+  getAllSubmissionsFromIdProblem,
+  getIdProblem,
+  getIdSubmission,
+} from './controller';
 
 export const router: express.Router = express.Router();
 
@@ -7,20 +17,20 @@ router.get('/', (_req, res) => {
   res.send('Hello from API root!');
 });
 
-router.get("/problems", getAllProblems);
+router.get('/problems', getAllProblems);
 
-router.post('/problems', createNewQuestion);
+router.post('/problems', createNewProblem);
 
-router.get("/problems/:id", getIdProblem);
+router.get('/problems/:id', getIdProblem);
 
-router.put("/problems/:id", editIdProblem);
+router.put('/problems/:id', editIdProblem);
 
-router.delete("/problems/:id", deleteIdProblem);
+router.delete('/problems/:id', deleteIdProblem);
 
-router.get("/problems/:id/submissions", getAllSubmissionsFromIdProblem);
+router.get('/problems/:id/submissions', getAllSubmissionsFromIdProblem);
 
-router.get("/submissions", getAllSubmissions);
+router.get('/submissions', getAllSubmissions);
 
-router.post("/submissions", createNewSubmission);
+router.post('/submissions', createNewSubmission);
 
-router.get("/submissions/:id", getIdSubmission);
+router.get('/submissions/:id', getIdSubmission);
