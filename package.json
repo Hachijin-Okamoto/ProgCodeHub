@@ -10,8 +10,10 @@
     "format:prisma": "prisma format",
     "format": "run-s format:ts format:prisma",
     "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma db seed",
     "transpile": "tsc",
     "build": "run-s lint format transpile",
+    "dev": "run-s prisma:seed start",
     "start": "node dist/Backend/index.js"
   },
   "repository": "https://github.com/Hachijin-Okamoto/ProgCodeHub.git",
@@ -37,6 +39,7 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "prettier": "^3.7.4",
     "prisma": "^7.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.49.0"
   }
