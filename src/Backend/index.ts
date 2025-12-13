@@ -1,10 +1,13 @@
 import express from 'express';
+import { router } from './rest/router';
 
 const PORT: number = 8000;
 const app: express.Express = express();
 
+app.use('/api', router);
+
 app.get('/', (_req, res) => {
-  res.send('Hello from Backend!');
+  res.redirect('/api');
 });
 
 app.listen(PORT, () => {
