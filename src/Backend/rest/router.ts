@@ -10,8 +10,11 @@ import {
   getIdProblem,
   getIdSubmission,
 } from './controller';
+import cors from 'cors';
 
 export const router: express.Router = express.Router();
+
+router.use(cors());
 
 router.get('/', (_req, res) => {
   res.send('Hello from API root!');
