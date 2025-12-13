@@ -1,6 +1,7 @@
 import * as db from './mockDB/database';
 import { Problem, Submission } from './mockDB/entity';
 import { ProblemListDTO, SubmissionListDTO } from './dto';
+import { prisma } from './lib/prisma';
 
 class NotImplementedError extends Error {
   constructor(message: string = 'NotImplemented') {
@@ -21,11 +22,13 @@ const _notImplemented = <T>(): T => {
 };
 
 export const getAllProblems = async (): Promise<ProblemListDTO[]> => {
-  const problems: Problem[] = await db.findAllProblems();
-  return problems.map((p) => ({
-    id: p.id,
-    title: p.title,
-  }));
+  const problems = await prisma.problem.findMany({
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+  return problems;
 };
 
 export const createNewProblem = async (
