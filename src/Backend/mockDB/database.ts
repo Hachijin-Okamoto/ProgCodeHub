@@ -1,6 +1,8 @@
 /* ダミーデータ用の疑似データベース */
 
-import { Problem, Submission } from "./entity";
+/* eslint-disable @typescript-eslint/require-await */
+
+import { Problem, Submission } from './entity';
 
 /**
  * ===== ダミーデータ =====
@@ -9,37 +11,38 @@ import { Problem, Submission } from "./entity";
 let problems: Problem[] = [
   {
     id: 1,
-    title: "FizzBuzz",
-    description: "1から100までの数を出力し、3の倍数でFizz、5の倍数でBuzzを表示せよ",
+    title: 'FizzBuzz',
+    description:
+      '1から100までの数を出力し、3の倍数でFizz、5の倍数でBuzzを表示せよ',
   },
   {
     id: 2,
-    title: "Factorial",
-    description: "与えられた整数 n の階乗を計算する関数を実装せよ",
+    title: 'Factorial',
+    description: '与えられた整数 n の階乗を計算する関数を実装せよ',
   },
   {
     id: 3,
-    title: "Palindrome",
-    description: "与えられた文字列が回文かどうか判定せよ",
+    title: 'Palindrome',
+    description: '与えられた文字列が回文かどうか判定せよ',
   },
   {
     id: 4,
-    title: "Prime Check",
-    description: "与えられた整数が素数かどうか判定せよ",
+    title: 'Prime Check',
+    description: '与えられた整数が素数かどうか判定せよ',
   },
   {
     id: 5,
-    title: "Fibonacci",
-    description: "n 番目のフィボナッチ数を計算せよ",
+    title: 'Fibonacci',
+    description: 'n 番目のフィボナッチ数を計算せよ',
   },
 ];
 
-let submissions: Submission[] = [
+const submissions: Submission[] = [
   // ===== FizzBuzz =====
   {
     id: 1,
     problemId: 1,
-    userName: "alice",
+    userName: 'alice',
     code: `
 for (let i = 1; i <= 100; i++) {
   let out = "";
@@ -48,12 +51,12 @@ for (let i = 1; i <= 100; i++) {
   console.log(out || i);
 }
     `,
-    submittedAt: new Date("2025-04-01T10:00:00Z").toISOString(),
+    submittedAt: new Date('2025-04-01T10:00:00Z').toISOString(),
   },
   {
     id: 2,
     problemId: 1,
-    userName: "bob",
+    userName: 'bob',
     code: `
 for (let i = 1; i <= 100; i++) {
   if (i % 15 === 0) console.log("FizzBuzz");
@@ -62,26 +65,26 @@ for (let i = 1; i <= 100; i++) {
   else console.log(i);
 }
     `,
-    submittedAt: new Date("2025-04-01T10:05:00Z").toISOString(),
+    submittedAt: new Date('2025-04-01T10:05:00Z').toISOString(),
   },
 
   // ===== Factorial =====
   {
     id: 3,
     problemId: 2,
-    userName: "charlie",
+    userName: 'charlie',
     code: `
 function factorial(n) {
   if (n <= 1) return 1;
   return n * factorial(n - 1);
 }
     `,
-    submittedAt: new Date("2025-04-02T09:30:00Z").toISOString(),
+    submittedAt: new Date('2025-04-02T09:30:00Z').toISOString(),
   },
   {
     id: 4,
     problemId: 2,
-    userName: "alice",
+    userName: 'alice',
     code: `
 function factorial(n) {
   let result = 1;
@@ -91,26 +94,26 @@ function factorial(n) {
   return result;
 }
     `,
-    submittedAt: new Date("2025-04-02T09:45:00Z").toISOString(),
+    submittedAt: new Date('2025-04-02T09:45:00Z').toISOString(),
   },
 
   // ===== Palindrome =====
   {
     id: 5,
     problemId: 3,
-    userName: "bob",
+    userName: 'bob',
     code: `
 function isPalindrome(s) {
   const r = s.split("").reverse().join("");
   return s === r;
 }
     `,
-    submittedAt: new Date("2025-04-03T11:00:00Z").toISOString(),
+    submittedAt: new Date('2025-04-03T11:00:00Z').toISOString(),
   },
   {
     id: 6,
     problemId: 3,
-    userName: "dave",
+    userName: 'dave',
     code: `
 function isPalindrome(s) {
   let i = 0, j = s.length - 1;
@@ -120,14 +123,14 @@ function isPalindrome(s) {
   return true;
 }
     `,
-    submittedAt: new Date("2025-04-03T11:10:00Z").toISOString(),
+    submittedAt: new Date('2025-04-03T11:10:00Z').toISOString(),
   },
 
   // ===== Prime Check =====
   {
     id: 7,
     problemId: 4,
-    userName: "charlie",
+    userName: 'charlie',
     code: `
 function isPrime(n) {
   if (n <= 1) return false;
@@ -137,26 +140,26 @@ function isPrime(n) {
   return true;
 }
     `,
-    submittedAt: new Date("2025-04-04T08:20:00Z").toISOString(),
+    submittedAt: new Date('2025-04-04T08:20:00Z').toISOString(),
   },
 
   // ===== Fibonacci =====
   {
     id: 8,
     problemId: 5,
-    userName: "alice",
+    userName: 'alice',
     code: `
 function fib(n) {
   if (n <= 1) return n;
   return fib(n - 1) + fib(n - 2);
 }
     `,
-    submittedAt: new Date("2025-04-05T14:00:00Z").toISOString(),
+    submittedAt: new Date('2025-04-05T14:00:00Z').toISOString(),
   },
   {
     id: 9,
     problemId: 5,
-    userName: "bob",
+    userName: 'bob',
     code: `
 function fib(n) {
   let a = 0, b = 1;
@@ -166,12 +169,12 @@ function fib(n) {
   return a;
 }
     `,
-    submittedAt: new Date("2025-04-05T14:10:00Z").toISOString(),
+    submittedAt: new Date('2025-04-05T14:10:00Z').toISOString(),
   },
   {
     id: 10,
     problemId: 5,
-    userName: "charlie",
+    userName: 'charlie',
     code: `
 function fib(n) {
   const dp = [0, 1];
@@ -181,7 +184,7 @@ function fib(n) {
   return dp[n];
 }
     `,
-    submittedAt: new Date("2025-04-05T14:20:00Z").toISOString(),
+    submittedAt: new Date('2025-04-05T14:20:00Z').toISOString(),
   },
 ];
 
@@ -194,14 +197,14 @@ export const findAllProblems = async (): Promise<Problem[]> => {
 };
 
 export const findProblemById = async (
-  id: number
+  id: number,
 ): Promise<Problem | undefined> => {
   return problems.find((p) => p.id === id);
 };
 
 export const createProblem = async (
   title: string,
-  description: string
+  description: string,
 ): Promise<Problem> => {
   const newProblem: Problem = {
     id: problems.length + 1,
@@ -215,9 +218,9 @@ export const createProblem = async (
 export const updateProblem = async (
   id: number,
   title: string,
-  description: string
+  description: string,
 ): Promise<Problem | undefined> => {
-  const problem = problems.find((p) => p.id === id);
+  const problem: Problem | undefined = problems.find((p) => p.id === id);
   if (!problem) return undefined;
 
   problem.title = title;
@@ -226,7 +229,7 @@ export const updateProblem = async (
 };
 
 export const deleteProblem = async (id: number): Promise<boolean> => {
-  const before = problems.length;
+  const before: number = problems.length;
   problems = problems.filter((p) => p.id !== id);
   return problems.length !== before;
 };
@@ -240,13 +243,13 @@ export const findSubmissions = async (): Promise<Submission[]> => {
 };
 
 export const findSubmissionsByProblemId = async (
-  problemId: number
+  problemId: number,
 ): Promise<Submission[]> => {
   return submissions.filter((s) => s.problemId === problemId);
 };
 
 export const findSubmissionById = async (
-  id: number
+  id: number,
 ): Promise<Submission | undefined> => {
   return submissions.find((s) => s.id === id);
 };
@@ -254,7 +257,7 @@ export const findSubmissionById = async (
 export const createSubmission = async (
   problemId: number,
   userName: string,
-  code: string
+  code: string,
 ): Promise<Submission> => {
   const newSubmission: Submission = {
     id: submissions.length + 1,

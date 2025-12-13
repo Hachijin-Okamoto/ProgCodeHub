@@ -1,24 +1,29 @@
 import { Request, Response } from 'express';
 import * as resourceService from '../service';
+import { ProblemListDTO } from '../dto';
+import { Problem } from '../mockDB/entity';
 
 export const getAllProblems = async (
   _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const problemIds: number[] = await resourceService.getAllProblems();
-    res.status(200).json(problemIds);
+    const problems: ProblemListDTO[] = await resourceService.getAllProblems();
+    res.status(200).json(problems);
   } catch (error) {
     res.status(503).send((error as Error).message);
   }
 };
 
 export const createNewProblem = async (
-  _req: Request,
+  req: Request<unknown, unknown, { title: string; description: string }>, // TODO:DTOを書く
   res: Response,
 ): Promise<void> => {
   try {
-    const newProblemId: number = await resourceService.createNewProblem();
+    const newProblemId: number = await resourceService.createNewProblem(
+      req.body.title,
+      req.body.description,
+    );
     res.status(201).json({ id: newProblemId });
   } catch (error) {
     res.status(503).send((error as Error).message);
@@ -26,14 +31,20 @@ export const createNewProblem = async (
 };
 
 export const getIdProblem = async (
-  _req: Request,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const problemId: number = await resourceService.getIdProblem(0);
-    res.status(200).json({ id: problemId });
+    const problem: Problem = await resourceService.getIdProblem(
+      Number(req.params.id),
+    );
+    res.status(200).json(problem);
   } catch (error) {
-    res.status(503).send((error as Error).message);
+    if (error instanceof resourceService.NotFoundError) {
+      res.status(404).send((error as Error).message);
+    } else {
+      res.status(503).send((error as Error).message);
+    }
   }
 };
 

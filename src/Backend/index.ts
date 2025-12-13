@@ -5,6 +5,7 @@ const PORT: number = 8000;
 const app: express.Express = express();
 
 app.use('/api', router);
+app.use(express.json());
 
 app.get('/', (_req, res) => {
   res.redirect('/api');
