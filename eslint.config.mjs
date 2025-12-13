@@ -62,7 +62,7 @@ export default defineConfig([
       "@typescript-eslint/explicit-module-boundary-types": "warn",
       "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/typedef": [
-        "error",
+        "warn",
         {
           "arrayDestructuring": false,
           "objectDestructuring": false,

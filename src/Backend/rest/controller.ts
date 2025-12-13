@@ -87,12 +87,14 @@ export const deleteIdProblem = async (
 };
 
 export const getAllSubmissionsFromIdProblem = async (
-  req: Request<unknown, unknown, { problemId: number }>, // DTO作った方がいい？
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
     const submissions: SubmissionListDTO[] =
-      await resourceService.getAllSubmissionsFromIdProblem(req.body.problemId);
+      await resourceService.getAllSubmissionsFromIdProblem(
+        Number(req.params.id),
+      );
     res.status(200).json(submissions);
   } catch (error) {
     res.status(503).send((error as Error).message);
