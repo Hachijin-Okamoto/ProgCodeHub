@@ -1,4 +1,3 @@
-import * as db from './mockDB/database';
 import { Problem, Submission } from './mockDB/entity';
 import { ProblemListDTO, SubmissionListDTO } from './dto';
 import { prisma } from './lib/prisma';
@@ -21,6 +20,9 @@ const _notImplemented = <T>(): T => {
   throw new NotImplementedError();
 };
 
+// prismaから返ってくる戻り値の型は型推論に任せる
+/* eslint-disable @typescript-eslint/typedef */
+
 export const getAllProblems = async (): Promise<ProblemListDTO[]> => {
   const problems = await prisma.problem.findMany({
     select: {
@@ -35,12 +37,20 @@ export const createNewProblem = async (
   title: string,
   description: string,
 ): Promise<number> => {
-  const newProblem: Problem = await db.createProblem(title, description);
+  const newProblem = await prisma.problem.create({
+    data: {
+      title,
+      description,
+    },
+  });
   return newProblem.id;
 };
 
 export const getIdProblem = async (id: number): Promise<Problem> => {
-  const problem: Problem | undefined = await db.findProblemById(id);
+  const problem = await prisma.problem.findUnique({
+    where: { id },
+  });
+
   if (!problem) {
     throw new NotFoundError('Problem not found');
   }
@@ -52,41 +62,51 @@ export const editIdProblem = async (
   title: string,
   description: string,
 ): Promise<number> => {
-  const problem: Problem | undefined = await db.updateProblem(
-    id,
-    title,
-    description,
-  );
-  if (!problem) {
+  try {
+    const problem = await prisma.problem.update({
+      where: { id },
+      data: { title, description },
+    });
+    return problem.id;
+  } catch {
+    // Prisma P2025 (Record not found)
     throw new NotFoundError('Problem not found');
   }
-  return problem.id;
 };
 
 export const deleteIdProblem = async (id: number): Promise<void> => {
-  const isDeleted: boolean = await db.deleteProblem(id);
-  if (!isDeleted) {
-    throw new Error('Failed to delete problem');
+  try {
+    await prisma.problem.delete({
+      where: { id },
+    });
+  } catch {
+    throw new NotFoundError('Problem not found');
   }
 };
 
 export const getAllSubmissionsFromIdProblem = async (
   problemId: number,
 ): Promise<SubmissionListDTO[]> => {
-  const submissions: Submission[] =
-    await db.findSubmissionsByProblemId(problemId);
-  return submissions.map((s) => ({
-    id: s.id,
-    problemId: s.problemId,
-  }));
+  const submissions = await prisma.submission.findMany({
+    where: { problemId },
+    select: {
+      id: true,
+      problemId: true,
+    },
+  });
+
+  return submissions;
 };
 
 export const getAllSubmissions = async (): Promise<SubmissionListDTO[]> => {
-  const submissions: Submission[] = await db.findSubmissions();
-  return submissions.map((s) => ({
-    id: s.id,
-    problemId: s.problemId,
-  }));
+  const submissions = await prisma.submission.findMany({
+    select: {
+      id: true,
+      problemId: true,
+    },
+  });
+
+  return submissions;
 };
 
 export const createNewSubmission = async (
@@ -94,18 +114,24 @@ export const createNewSubmission = async (
   userName: string,
   code: string,
 ): Promise<number> => {
-  const newSubmission: Submission = await db.createSubmission(
-    problemId,
-    userName,
-    code,
-  );
+  const newSubmission = await prisma.submission.create({
+    data: {
+      problemId,
+      userName,
+      code,
+    },
+  });
   return newSubmission.id;
 };
 
 export const getIdSubmission = async (id: number): Promise<Submission> => {
-  const submission: Submission | undefined = await db.findSubmissionById(id);
+  const submission = await prisma.submission.findUnique({
+    where: { id },
+  });
+
   if (!submission) {
     throw new NotFoundError('Submission not found');
   }
+
   return submission;
 };

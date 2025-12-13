@@ -1,5 +1,7 @@
 import { prisma } from './lib/prisma';
 
+/* eslint-disable @typescript-eslint/typedef */
+
 async function main(): Promise<void> {
   // 既存データがある場合は重複投入を避ける
   const count = await prisma.problem.count();
