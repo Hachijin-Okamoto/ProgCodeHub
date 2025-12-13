@@ -6,4 +6,5 @@ dist/
 *.sqlite
 *.sqlite3
 *.env
-/src/generated/prisma
+
+/src/Backend/generated/prisma
