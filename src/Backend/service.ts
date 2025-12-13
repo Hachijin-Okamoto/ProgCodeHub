@@ -1,6 +1,6 @@
 import * as db from './mockDB/database';
-import { Problem } from './mockDB/entity';
-import { ProblemListDTO } from './dto';
+import { Problem, Submission } from './mockDB/entity';
+import { ProblemListDTO, SubmissionListDTO } from './dto';
 
 class NotImplementedError extends Error {
   constructor(message: string = 'NotImplemented') {
@@ -16,7 +16,7 @@ export class NotFoundError extends Error {
   }
 }
 
-const notImplemented = <T>(): T => {
+const _notImplemented = <T>(): T => {
   throw new NotImplementedError();
 };
 
@@ -44,28 +44,65 @@ export const getIdProblem = async (id: number): Promise<Problem> => {
   return problem;
 };
 
-export const editIdProblem = async (_id: number): Promise<number> => {
-  return notImplemented<Promise<number>>();
+export const editIdProblem = async (
+  id: number,
+  title: string,
+  description: string,
+): Promise<number> => {
+  const problem: Problem | undefined = await db.updateProblem(
+    id,
+    title,
+    description,
+  );
+  if (!problem) {
+    throw new NotFoundError('Problem not found');
+  }
+  return problem.id;
 };
 
-export const deleteIdProblem = async (_id: number): Promise<number> => {
-  return notImplemented<Promise<number>>();
+export const deleteIdProblem = async (id: number): Promise<void> => {
+  const isDeleted: boolean = await db.deleteProblem(id);
+  if (!isDeleted) {
+    throw new Error('Failed to delete problem');
+  }
 };
 
 export const getAllSubmissionsFromIdProblem = async (
-  _problemId: number,
-): Promise<number[]> => {
-  return notImplemented<Promise<number[]>>();
+  problemId: number,
+): Promise<SubmissionListDTO[]> => {
+  const submissions: Submission[] =
+    await db.findSubmissionsByProblemId(problemId);
+  return submissions.map((s) => ({
+    id: s.id,
+    problemId: s.problemId,
+  }));
 };
 
-export const getAllSubmissions = async (): Promise<number[]> => {
-  return notImplemented<Promise<number[]>>();
+export const getAllSubmissions = async (): Promise<SubmissionListDTO[]> => {
+  const submissions: Submission[] = await db.findSubmissions();
+  return submissions.map((s) => ({
+    id: s.id,
+    problemId: s.problemId,
+  }));
 };
 
-export const createNewSubmission = async (): Promise<number> => {
-  return notImplemented<Promise<number>>();
+export const createNewSubmission = async (
+  problemId: number,
+  userName: string,
+  code: string,
+): Promise<number> => {
+  const newSubmission: Submission = await db.createSubmission(
+    problemId,
+    userName,
+    code,
+  );
+  return newSubmission.id;
 };
 
-export const getIdSubmission = async (_id: number): Promise<number> => {
-  return notImplemented<Promise<number>>();
+export const getIdSubmission = async (id: number): Promise<Submission> => {
+  const submission: Submission | undefined = await db.findSubmissionById(id);
+  if (!submission) {
+    throw new NotFoundError('Submission not found');
+  }
+  return submission;
 };

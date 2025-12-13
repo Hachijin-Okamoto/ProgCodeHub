@@ -9,5 +9,4 @@ export type Submission = {
   problemId: number;
   userName: string;
   code: string;
-  submittedAt: string;
-};
+}; // 提出日時は一旦消す

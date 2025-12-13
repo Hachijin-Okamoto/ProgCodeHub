@@ -51,7 +51,6 @@ for (let i = 1; i <= 100; i++) {
   console.log(out || i);
 }
     `,
-    submittedAt: new Date('2025-04-01T10:00:00Z').toISOString(),
   },
   {
     id: 2,
@@ -65,7 +64,6 @@ for (let i = 1; i <= 100; i++) {
   else console.log(i);
 }
     `,
-    submittedAt: new Date('2025-04-01T10:05:00Z').toISOString(),
   },
 
   // ===== Factorial =====
@@ -79,7 +77,6 @@ function factorial(n) {
   return n * factorial(n - 1);
 }
     `,
-    submittedAt: new Date('2025-04-02T09:30:00Z').toISOString(),
   },
   {
     id: 4,
@@ -94,7 +91,6 @@ function factorial(n) {
   return result;
 }
     `,
-    submittedAt: new Date('2025-04-02T09:45:00Z').toISOString(),
   },
 
   // ===== Palindrome =====
@@ -108,7 +104,6 @@ function isPalindrome(s) {
   return s === r;
 }
     `,
-    submittedAt: new Date('2025-04-03T11:00:00Z').toISOString(),
   },
   {
     id: 6,
@@ -123,7 +118,6 @@ function isPalindrome(s) {
   return true;
 }
     `,
-    submittedAt: new Date('2025-04-03T11:10:00Z').toISOString(),
   },
 
   // ===== Prime Check =====
@@ -140,7 +134,6 @@ function isPrime(n) {
   return true;
 }
     `,
-    submittedAt: new Date('2025-04-04T08:20:00Z').toISOString(),
   },
 
   // ===== Fibonacci =====
@@ -154,7 +147,6 @@ function fib(n) {
   return fib(n - 1) + fib(n - 2);
 }
     `,
-    submittedAt: new Date('2025-04-05T14:00:00Z').toISOString(),
   },
   {
     id: 9,
@@ -169,7 +161,6 @@ function fib(n) {
   return a;
 }
     `,
-    submittedAt: new Date('2025-04-05T14:10:00Z').toISOString(),
   },
   {
     id: 10,
@@ -184,7 +175,6 @@ function fib(n) {
   return dp[n];
 }
     `,
-    submittedAt: new Date('2025-04-05T14:20:00Z').toISOString(),
   },
 ];
 
@@ -264,7 +254,6 @@ export const createSubmission = async (
     problemId,
     userName,
     code,
-    submittedAt: new Date().toISOString(),
   };
   submissions.push(newSubmission);
   return newSubmission;

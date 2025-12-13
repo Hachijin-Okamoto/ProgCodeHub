@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
 import * as resourceService from '../service';
-import { ProblemListDTO } from '../dto';
-import { Problem } from '../mockDB/entity';
+import {
+  CreateProblemDTO,
+  CreateSubmissionDTO,
+  EditProblemDTO,
+  ProblemListDTO,
+  SubmissionListDTO,
+} from '../dto';
+import { Problem, Submission } from '../mockDB/entity';
 
 export const getAllProblems = async (
   _req: Request,
@@ -16,7 +22,7 @@ export const getAllProblems = async (
 };
 
 export const createNewProblem = async (
-  req: Request<unknown, unknown, { title: string; description: string }>, // TODO:DTOを書く
+  req: Request<unknown, unknown, CreateProblemDTO>,
   res: Response,
 ): Promise<void> => {
   try {
@@ -49,36 +55,44 @@ export const getIdProblem = async (
 };
 
 export const editIdProblem = async (
-  _req: Request,
+  req: Request<unknown, unknown, EditProblemDTO>,
   res: Response,
 ): Promise<void> => {
   try {
-    const editedProblemId: number = await resourceService.editIdProblem(0);
-    res.status(200).json({ id: editedProblemId });
+    await resourceService.editIdProblem(
+      req.body.id,
+      req.body.title,
+      req.body.description,
+    );
+    res.status(204).send();
   } catch (error) {
-    res.status(503).send((error as Error).message);
+    if (error instanceof resourceService.NotFoundError) {
+      res.status(404).send((error as Error).message);
+    } else {
+      res.status(503).send((error as Error).message);
+    }
   }
 };
 
 export const deleteIdProblem = async (
-  _req: Request,
+  req: Request<unknown, unknown, { id: number }>, // DTO作った方がいい？
   res: Response,
 ): Promise<void> => {
   try {
-    const deletedProblemId: number = await resourceService.deleteIdProblem(0);
-    res.status(200).json({ id: deletedProblemId });
+    await resourceService.deleteIdProblem(req.body.id);
+    res.status(204).send();
   } catch (error) {
     res.status(503).send((error as Error).message);
   }
 };
 
 export const getAllSubmissionsFromIdProblem = async (
-  _req: Request,
+  req: Request<unknown, unknown, { problemId: number }>, // DTO作った方がいい？
   res: Response,
 ): Promise<void> => {
   try {
-    const submissions: number[] =
-      await resourceService.getAllSubmissionsFromIdProblem(0);
+    const submissions: SubmissionListDTO[] =
+      await resourceService.getAllSubmissionsFromIdProblem(req.body.problemId);
     res.status(200).json(submissions);
   } catch (error) {
     res.status(503).send((error as Error).message);
@@ -90,7 +104,8 @@ export const getAllSubmissions = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const submissions: number[] = await resourceService.getAllSubmissions();
+    const submissions: SubmissionListDTO[] =
+      await resourceService.getAllSubmissions();
     res.status(200).json(submissions);
   } catch (error) {
     res.status(503).send((error as Error).message);
@@ -98,11 +113,15 @@ export const getAllSubmissions = async (
 };
 
 export const createNewSubmission = async (
-  _req: Request,
+  req: Request<unknown, unknown, CreateSubmissionDTO>,
   res: Response,
 ): Promise<void> => {
   try {
-    const newSubmissionId: number = await resourceService.createNewSubmission();
+    const newSubmissionId: number = await resourceService.createNewSubmission(
+      req.body.problemId,
+      req.body.userName,
+      req.body.code,
+    );
     res.status(201).json({ id: newSubmissionId });
   } catch (error) {
     res.status(503).send((error as Error).message);
@@ -110,13 +129,19 @@ export const createNewSubmission = async (
 };
 
 export const getIdSubmission = async (
-  _req: Request,
+  req: Request, // DTO作った方がいい？
   res: Response,
 ): Promise<void> => {
   try {
-    const submissionId: number = await resourceService.getIdSubmission(0);
-    res.status(200).json({ id: submissionId });
+    const submission: Submission = await resourceService.getIdSubmission(
+      Number(req.params.id),
+    );
+    res.status(200).json(submission);
   } catch (error) {
-    res.status(503).send((error as Error).message);
+    if (error instanceof resourceService.NotFoundError) {
+      res.status(404).send((error as Error).message);
+    } else {
+      res.status(503).send((error as Error).message);
+    }
   }
 };
