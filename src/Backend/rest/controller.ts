@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as resourceService from './service';
+import * as resourceService from '../service';
 
 export const getAllProblems = async (
   _req: Request,

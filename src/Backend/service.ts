@@ -1,4 +1,4 @@
-class NotimplementedError extends Error {
+class NotImplementedError extends Error {
   constructor(message: string = 'NotImplemented') {
     super(message);
     this.name = 'NotImplementedError';
@@ -6,7 +6,7 @@ class NotimplementedError extends Error {
 }
 
 const notImplemented = <T>(): T => {
-  throw new NotimplementedError();
+  throw new NotImplementedError();
 };
 
 export const getAllProblems = async (): Promise<number[]> => {
