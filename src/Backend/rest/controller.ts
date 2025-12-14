@@ -55,12 +55,12 @@ export const getIdProblem = async (
 };
 
 export const editIdProblem = async (
-  req: Request<unknown, unknown, EditProblemDTO>,
+  req: Request<{ id: string }, unknown, EditProblemDTO>,
   res: Response,
 ): Promise<void> => {
   try {
     await resourceService.editIdProblem(
-      req.body.id,
+      Number(req.params.id),
       req.body.title,
       req.body.description,
     );
@@ -75,11 +75,11 @@ export const editIdProblem = async (
 };
 
 export const deleteIdProblem = async (
-  req: Request<unknown, unknown, { id: number }>, // DTO作った方がいい？
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    await resourceService.deleteIdProblem(req.body.id);
+    await resourceService.deleteIdProblem(Number(req.params.id));
     res.status(204).send();
   } catch (error) {
     res.status(503).send((error as Error).message);
