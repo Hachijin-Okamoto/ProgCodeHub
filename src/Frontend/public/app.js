@@ -1,37 +1,70 @@
-const apiBase = 'http://localhost:8000/api'; // Expressのポート
+const API_BASE = 'http://localhost:8000/api';
 
-async function loadProblems() {
-  const res = await fetch(`${apiBase}/problems`);
-  const problems = await res.json();
+const output = document.getElementById('output');
 
-  const ul = document.getElementById('problem-list');
-  ul.innerHTML = '';
+const show = (data) => {
+  output.textContent = JSON.stringify(data, null, 2);
+};
 
-  problems.forEach((p) => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = `problem.html?id=${p.id}`;
-    a.textContent = p.title;
-    li.appendChild(a);
-    ul.appendChild(li);
-  });
-}
-
-document
-  .getElementById('create-form')
-  .addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-
-    await fetch(`${apiBase}/problems`, {
-      method: 'POST',
+const request = async (url, options = {}) => {
+  try {
+    const res = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, description }),
+      ...options,
     });
+    const text = await res.text();
+    show({
+      status: res.status,
+      body: text ? JSON.parse(text) : null,
+    });
+  } catch (e) {
+    show({ error: e.message });
+  }
+};
 
-    await loadProblems();
+// Problems
+const getAllProblems = () => request(`${API_BASE}/problems`);
+
+const createProblem = () =>
+  request(`${API_BASE}/problems`, {
+    method: 'POST',
+    body: JSON.stringify({
+      title: problemTitle.value,
+      description: problemDesc.value,
+    }),
   });
 
-loadProblems();
+const getProblem = () => request(`${API_BASE}/problems/${problemId.value}`);
+
+const editProblem = () =>
+  request(`${API_BASE}/problems/${problemId.value}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      title: problemTitle.value,
+      description: problemDesc.value,
+    }),
+  });
+
+const deleteProblem = () =>
+  request(`${API_BASE}/problems/${problemId.value}`, {
+    method: 'DELETE',
+  });
+
+const getProblemSubmissions = () =>
+  request(`${API_BASE}/problems/${problemId.value}/submissions`);
+
+// Submissions
+const getAllSubmissions = () => request(`${API_BASE}/submissions`);
+
+const createSubmission = () =>
+  request(`${API_BASE}/submissions`, {
+    method: 'POST',
+    body: JSON.stringify({
+      problemId: Number(submissionProblemId.value),
+      userName: submissionUser.value,
+      code: submissionCode.value,
+    }),
+  });
+
+const getSubmission = () =>
+  request(`${API_BASE}/submissions/${submissionId.value}`);
