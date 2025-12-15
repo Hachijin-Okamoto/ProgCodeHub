@@ -2,6 +2,7 @@ import { ProblemListDTO, SubmissionListDTO } from '../../dto';
 import { Problem, Submission } from '../../mockDB/entity';
 import * as resourceService from '../../service';
 
+/* eslint-disable @typescript-eslint/typedef */
 const resolvers = {
   Query: {
     hello: (): string => 'Hello world!',

@@ -7,6 +7,7 @@ import { ruruHTML } from 'ruru/server';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { GraphQLSchema } from 'graphql';
 
 const PORT: number = 8000;
 const app: express.Express = express();
@@ -25,14 +26,14 @@ const resolvers = mergeResolvers(
   loadFilesSync(path.join(__dirname, 'graphql', 'resolver')),
 );
 
-const schema = makeExecutableSchema({
+const schema: GraphQLSchema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
 
 app.all('/graphql', createHandler({ schema }));
 
-app.get('/graphql-ui', (_req, res) => {
+app.get('/ui/graphql', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
 });
@@ -42,7 +43,7 @@ app.get('/graphql-ui', (_req, res) => {
 const staticPath: string = path.join(__dirname, '..', 'Frontend', 'public');
 app.use(express.static(staticPath));
 
-app.get('/rest-ui', (_req, res) => {
+app.get('/ui/rest', (_req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
 
