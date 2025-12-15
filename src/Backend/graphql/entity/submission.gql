@@ -1,0 +1,6 @@
+type Submission {
+    id: ID!
+    problemId: ID!
+    userName: String!
+    code: String!
+}

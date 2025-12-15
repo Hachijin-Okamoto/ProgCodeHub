@@ -1,10 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import { buildSchema } from 'graphql';
 import { createHandler } from 'graphql-http/lib/use/express';
 import path from 'path';
 import { router } from './rest/router';
 import { ruruHTML } from 'ruru/server';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 
 const PORT: number = 8000;
 const app: express.Express = express();
@@ -16,15 +18,19 @@ app.use('/api', router);
 
 /* GraphQL */
 
-const schema = buildSchema(`type Query { hello: String }`);
+const typeDefs = mergeTypeDefs(
+  loadFilesSync(path.join(__dirname, 'graphql', 'entity')),
+);
+const resolvers = mergeResolvers(
+  loadFilesSync(path.join(__dirname, 'graphql', 'resolver')),
+);
 
-const root = {
-  hello(): string {
-    return 'Hello world!';
-  },
-};
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
-app.all('/graphql', createHandler({ schema: schema, rootValue: root }));
+app.all('/graphql', createHandler({ schema }));
 
 app.get('/graphql-ui', (_req, res) => {
   res.type('html');
