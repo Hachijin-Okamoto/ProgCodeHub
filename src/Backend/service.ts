@@ -48,7 +48,7 @@ export const createNewProblem = async (
 
 export const getIdProblem = async (id: number): Promise<Problem> => {
   const problem = await prisma.problem.findUnique({
-    where: { id },
+    where: { id: Number(id) },
   });
 
   if (!problem) {
@@ -126,7 +126,7 @@ export const createNewSubmission = async (
 
 export const getIdSubmission = async (id: number): Promise<Submission> => {
   const submission = await prisma.submission.findUnique({
-    where: { id },
+    where: { id: Number(id) },
   });
 
   if (!submission) {
