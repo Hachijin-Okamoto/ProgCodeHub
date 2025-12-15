@@ -14,7 +14,9 @@
     "format": "run-s format:*",
     "prisma:generate": "prisma generate",
     "prisma:seed": "prisma db seed",
-    "copy": "rm -rf dist/Frontend/public && cp -r src/Frontend/public dist/Frontend/public",
+    "copy:public": "rm -rf dist/Frontend/public && cp -r src/Frontend/public dist/Frontend/public",
+    "copy:graphql": "rm -rf dist/Backend/graphql/entity && cp -r src/Backend/graphql/entity dist/Backend/graphql/entity",
+    "copy": "run-s copy:*",
     "transpile": "tsc",
     "build": "run-s lint format transpile copy",
     "dev": "run-s prisma:seed start",
@@ -26,11 +28,18 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@apollo/server": "^5.2.0",
+    "@graphql-tools/load-files": "^7.0.1",
+    "@graphql-tools/merge": "^9.1.6",
+    "@graphql-tools/schema": "^10.0.30",
     "@prisma/adapter-better-sqlite3": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "npm-run-all": "^4.1.5"
+    "graphql": "^16.12.0",
+    "graphql-http": "^1.22.4",
+    "npm-run-all": "^4.1.5",
+    "ruru": "^2.0.0-rc.3"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",

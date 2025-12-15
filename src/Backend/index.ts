@@ -1,7 +1,12 @@
 import express from 'express';
-import { router } from './rest/router';
 import cors from 'cors';
-import path from 'node:path';
+import { createHandler } from 'graphql-http/lib/use/express';
+import path from 'path';
+import { router } from './rest/router';
+import { ruruHTML } from 'ruru/server';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 
 const PORT: number = 8000;
 const app: express.Express = express();
@@ -9,15 +14,35 @@ const app: express.Express = express();
 app.use(cors());
 app.use(express.json());
 
-const staticPath = path.join(__dirname, '..', 'Frontend', 'public');
-
-// 静的ファイルの設定
-app.use(express.static(staticPath));
-
 app.use('/api', router);
 
-app.get('/', (_req, res) => {
-  // 静的ファイルディレクトリの絶対パスと 'index.html' を結合して、絶対パスを生成
+/* GraphQL */
+
+const typeDefs = mergeTypeDefs(
+  loadFilesSync(path.join(__dirname, 'graphql', 'entity')),
+);
+const resolvers = mergeResolvers(
+  loadFilesSync(path.join(__dirname, 'graphql', 'resolver')),
+);
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
+app.all('/graphql', createHandler({ schema }));
+
+app.get('/graphql-ui', (_req, res) => {
+  res.type('html');
+  res.end(ruruHTML({ endpoint: '/graphql' }));
+});
+
+/* ここまで */
+
+const staticPath: string = path.join(__dirname, '..', 'Frontend', 'public');
+app.use(express.static(staticPath));
+
+app.get('/rest-ui', (_req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
 

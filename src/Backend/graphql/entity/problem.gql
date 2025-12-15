@@ -1,0 +1,7 @@
+type Problem {
+    id: ID!
+    title: String!
+    description: String!
+
+    submissions: [Submission]!
+}

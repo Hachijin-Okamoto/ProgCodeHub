@@ -1,0 +1,9 @@
+type Query {
+    hello: String
+
+    problems: [Problem!]!
+    problem(id: ID!): Problem
+
+    submissions: [Submission!]!
+    submission(id: ID!): Submission
+}

@@ -17,7 +17,7 @@ export const router: express.Router = express.Router();
 router.use(cors());
 
 router.get('/', (_req, res) => {
-  res.sendFile('index.html');
+  res.send('Welcome to the ProgCodeHub API!');
 });
 
 router.get('/problems', getAllProblems);
