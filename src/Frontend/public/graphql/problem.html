@@ -1,0 +1,34 @@
+<h1 id="title"></h1>
+<p id="desc"></p>
+
+<h2>提出一覧</h2>
+<ul id="subs"></ul>
+
+<script src="main.js"></script>
+<script>
+  const id = getQueryParam("id");
+
+  gql(`
+    query ($id: ID!) {
+      problem(id: $id) {
+        title
+        description
+        submissions {
+          id
+          userName
+        }
+      }
+    }
+  `, { id }).then(data => {
+    const p = data.problem;
+    document.getElementById("title").textContent = p.title;
+    document.getElementById("desc").textContent = p.description;
+
+    const ul = document.getElementById("subs");
+    p.submissions.forEach(s => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
+      ul.appendChild(li);
+    });
+  });
+</script>

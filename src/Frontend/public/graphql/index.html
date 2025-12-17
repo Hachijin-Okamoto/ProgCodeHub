@@ -1,0 +1,21 @@
+<h1>問題一覧</h1>
+<ul id="list"></ul>
+
+<script src="main.js"></script>
+<script>
+  gql(`
+    query {
+      problems {
+        id
+        title
+      }
+    }
+  `).then(data => {
+    const ul = document.getElementById("list");
+    data.problems.forEach(p => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="problem.html?id=${p.id}">${p.title}</a>`;
+      ul.appendChild(li);
+    });
+  });
+</script>
