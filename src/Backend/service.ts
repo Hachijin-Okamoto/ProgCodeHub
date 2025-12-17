@@ -93,12 +93,7 @@ export const getAllSubmissionsFromIdProblem = async (
 };
 
 export const getAllSubmissions = async (): Promise<SubmissionListDTO[]> => {
-  const submissions = await prisma.submission.findMany({
-    select: {
-      id: true,
-      problemId: true,
-    },
-  });
+  const submissions = await prisma.submission.findMany({});
 
   return submissions;
 };

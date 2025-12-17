@@ -17,7 +17,6 @@
           const ul = document.getElementById('problem-list');
 
           for (const p of problems) {
-            // 追加リクエスト（N+1）
             const res = await fetch(`${API_BASE}/problems/${p.id}`);
             const detail = await res.json();
 

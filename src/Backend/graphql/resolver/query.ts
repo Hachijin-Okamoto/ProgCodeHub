@@ -5,8 +5,6 @@ import * as resourceService from '../../service';
 /* eslint-disable @typescript-eslint/typedef */
 const resolvers = {
   Query: {
-    hello: (): string => 'Hello world!',
-
     problems: async (): Promise<ProblemListDTO[]> => {
       return await resourceService.getAllProblems();
     },

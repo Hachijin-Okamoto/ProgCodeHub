@@ -33,9 +33,15 @@ const schema: GraphQLSchema = makeExecutableSchema({
 
 app.all('/graphql', createHandler({ schema }));
 
-app.get('/ui/graphql-test', (_req, res) => {
+app.get('/ui/ruru', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
+});
+
+app.get('/ui/graphql-test', (_req, res) => {
+  res.sendFile(
+    path.join(__dirname, '..', 'Frontend', 'public', 'graphql', 'api.html'),
+  );
 });
 
 app.get('/ui/graphql', (_req, res) => {

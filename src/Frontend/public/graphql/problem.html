@@ -4,33 +4,36 @@
     <meta charset="UTF-8" />
     <title>問題詳細(GraphQL)</title>
 
-    <!-- ★ これを追加 -->
     <link rel="stylesheet" href="/ui/style.css" />
   </head>
   <body>
     <h1 id="title"></h1>
-    <p id="desc"></p>
+    <div id="desc"></div>
 
     <a id="subs-link">提出一覧を見る</a>
 
     <script src="/ui/graphql/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       const id = getQueryParam('id');
 
       gql(
         `
-    query ($id: ID!) {
-      problem(id: $id) {
-        title
-        description
-      }
-    }
-    `,
+        query ($id: ID!) {
+          problem(id: $id) {
+            title
+            description
+          }
+        }
+        `,
         { id },
       ).then((data) => {
         const p = data.problem;
+
         document.getElementById('title').textContent = p.title;
-        document.getElementById('desc').textContent = p.description;
+
+        const html = marked.parse(p.description);
+        document.getElementById('desc').innerHTML = html;
 
         document.getElementById('subs-link').href =
           `submissions.html?problemId=${id}`;
