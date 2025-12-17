@@ -2,21 +2,22 @@
 <p>ユーザー: <span id="user"></span></p>
 <pre id="code"></pre>
 
-<script src="main.js"></script>
+<script src="/ui/graphql/main.js"></script>
 <script>
-  const id = getQueryParam("id");
+  const id = getQueryParam('id');
 
-  gql(`
+  gql(
+    `
     query ($id: ID!) {
       submission(id: $id) {
         userName
         code
       }
     }
-  `, { id }).then(data => {
-    document.getElementById("user").textContent =
-      data.submission.userName;
-    document.getElementById("code").textContent =
-      data.submission.code;
+  `,
+    { id },
+  ).then((data) => {
+    document.getElementById('user').textContent = data.submission.userName;
+    document.getElementById('code').textContent = data.submission.code;
   });
 </script>

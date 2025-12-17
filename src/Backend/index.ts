@@ -33,18 +33,24 @@ const schema: GraphQLSchema = makeExecutableSchema({
 
 app.all('/graphql', createHandler({ schema }));
 
-app.get('/ui/graphql', (_req, res) => {
+app.get('/ui/graphql-test', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
+});
+
+app.get('/ui/graphql', (_req, res) => {
+  res.sendFile(
+    path.join(__dirname, '..', 'Frontend', 'public', 'graphql', 'index.html'),
+  );
 });
 
 /* ここまで */
 
 const staticPath: string = path.join(__dirname, '..', 'Frontend', 'public');
-app.use(express.static(staticPath));
+app.use('/ui', express.static(staticPath));
 
 app.get('/ui/rest', (_req, res) => {
-  res.sendFile(path.join(staticPath, 'index.html'));
+  res.sendFile(path.join(staticPath, 'rest', 'index.html'));
 });
 
 app.listen(PORT, () => {

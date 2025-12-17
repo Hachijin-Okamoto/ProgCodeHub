@@ -4,11 +4,12 @@
 <h2>提出一覧</h2>
 <ul id="subs"></ul>
 
-<script src="main.js"></script>
+<script src="/ui/graphql/main.js"></script>
 <script>
-  const id = getQueryParam("id");
+  const id = getQueryParam('id');
 
-  gql(`
+  gql(
+    `
     query ($id: ID!) {
       problem(id: $id) {
         title
@@ -19,14 +20,16 @@
         }
       }
     }
-  `, { id }).then(data => {
+  `,
+    { id },
+  ).then((data) => {
     const p = data.problem;
-    document.getElementById("title").textContent = p.title;
-    document.getElementById("desc").textContent = p.description;
+    document.getElementById('title').textContent = p.title;
+    document.getElementById('desc').textContent = p.description;
 
-    const ul = document.getElementById("subs");
-    p.submissions.forEach(s => {
-      const li = document.createElement("li");
+    const ul = document.getElementById('subs');
+    p.submissions.forEach((s) => {
+      const li = document.createElement('li');
       li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
       ul.appendChild(li);
     });

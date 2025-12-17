@@ -1,9 +1,9 @@
-const GRAPHQL_ENDPOINT = "http://localhost:8000/graphql";
+const GRAPHQL_ENDPOINT = 'http://localhost:8000/graphql';
 
 async function gql(query, variables = {}) {
   const res = await fetch(GRAPHQL_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, variables }),
   });
   const json = await res.json();
