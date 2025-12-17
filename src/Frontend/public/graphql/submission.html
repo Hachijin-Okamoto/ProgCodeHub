@@ -1,23 +1,35 @@
-<h1>提出詳細</h1>
-<p>ユーザー: <span id="user"></span></p>
-<pre id="code"></pre>
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>提出詳細</title>
 
-<script src="/ui/graphql/main.js"></script>
-<script>
-  const id = getQueryParam('id');
+    <!-- ★ これを追加（REST / GraphQL 共通） -->
+    <link rel="stylesheet" href="/ui/style.css" />
+  </head>
+  <body>
+    <h1>提出詳細</h1>
+    <p>ユーザー: <span id="user"></span></p>
+    <pre id="code"></pre>
 
-  gql(
-    `
-    query ($id: ID!) {
-      submission(id: $id) {
-        userName
-        code
+    <script src="/ui/graphql/main.js"></script>
+    <script>
+      const id = getQueryParam('id');
+
+      gql(
+        `
+      query ($id: ID!) {
+        submission(id: $id) {
+          userName
+          code
+        }
       }
-    }
-  `,
-    { id },
-  ).then((data) => {
-    document.getElementById('user').textContent = data.submission.userName;
-    document.getElementById('code').textContent = data.submission.code;
-  });
-</script>
+      `,
+        { id },
+      ).then((data) => {
+        document.getElementById('user').textContent = data.submission.userName;
+        document.getElementById('code').textContent = data.submission.code;
+      });
+    </script>
+  </body>
+</html>

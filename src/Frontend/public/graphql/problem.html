@@ -1,37 +1,49 @@
-<h1 id="title"></h1>
-<p id="desc"></p>
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>問題詳細</title>
 
-<h2>提出一覧</h2>
-<ul id="subs"></ul>
+    <!-- ★ これを追加 -->
+    <link rel="stylesheet" href="/ui/style.css" />
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <p id="desc"></p>
 
-<script src="/ui/graphql/main.js"></script>
-<script>
-  const id = getQueryParam('id');
+    <h2>提出一覧</h2>
+    <ul id="subs"></ul>
 
-  gql(
-    `
-    query ($id: ID!) {
-      problem(id: $id) {
-        title
-        description
-        submissions {
-          id
-          userName
+    <script src="/ui/graphql/main.js"></script>
+    <script>
+      const id = getQueryParam('id');
+
+      gql(
+        `
+      query ($id: ID!) {
+        problem(id: $id) {
+          title
+          description
+          submissions {
+            id
+            userName
+          }
         }
       }
-    }
-  `,
-    { id },
-  ).then((data) => {
-    const p = data.problem;
-    document.getElementById('title').textContent = p.title;
-    document.getElementById('desc').textContent = p.description;
+      `,
+        { id },
+      ).then((data) => {
+        const p = data.problem;
+        document.getElementById('title').textContent = p.title;
+        document.getElementById('desc').textContent = p.description;
 
-    const ul = document.getElementById('subs');
-    p.submissions.forEach((s) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
-      ul.appendChild(li);
-    });
-  });
-</script>
+        const ul = document.getElementById('subs');
+        p.submissions.forEach((s) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
+          ul.appendChild(li);
+        });
+      });
+    </script>
+  </body>
+</html>
