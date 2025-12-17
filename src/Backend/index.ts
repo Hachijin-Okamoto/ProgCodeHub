@@ -53,6 +53,12 @@ app.get('/ui/rest', (_req, res) => {
   res.sendFile(path.join(staticPath, 'rest', 'index.html'));
 });
 
+app.get('/ui/rest-test', (_req, res) => {
+  res.sendFile(
+    path.join(__dirname, '..', 'Frontend', 'public', 'rest', 'api.html'),
+  );
+});
+
 app.listen(PORT, () => {
   console.log(`Backend server is running on http://localhost:${PORT}`);
 });

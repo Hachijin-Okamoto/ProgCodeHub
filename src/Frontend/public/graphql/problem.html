@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>問題詳細</title>
+    <title>問題詳細(GraphQL)</title>
 
     <!-- ★ これを追加 -->
     <link rel="stylesheet" href="/ui/style.css" />
@@ -11,8 +11,7 @@
     <h1 id="title"></h1>
     <p id="desc"></p>
 
-    <h2>提出一覧</h2>
-    <ul id="subs"></ul>
+    <a id="subs-link">提出一覧を見る</a>
 
     <script src="/ui/graphql/main.js"></script>
     <script>
@@ -20,29 +19,21 @@
 
       gql(
         `
-      query ($id: ID!) {
-        problem(id: $id) {
-          title
-          description
-          submissions {
-            id
-            userName
-          }
-        }
+    query ($id: ID!) {
+      problem(id: $id) {
+        title
+        description
       }
-      `,
+    }
+    `,
         { id },
       ).then((data) => {
         const p = data.problem;
         document.getElementById('title').textContent = p.title;
         document.getElementById('desc').textContent = p.description;
 
-        const ul = document.getElementById('subs');
-        p.submissions.forEach((s) => {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
-          ul.appendChild(li);
-        });
+        document.getElementById('subs-link').href =
+          `submissions.html?problemId=${id}`;
       });
     </script>
   </body>

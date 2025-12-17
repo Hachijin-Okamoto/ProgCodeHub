@@ -15,7 +15,8 @@ export const getAllProblems = async (
 ): Promise<void> => {
   try {
     const problems: ProblemListDTO[] = await resourceService.getAllProblems();
-    res.status(200).json(problems);
+    const problemsFixed: ProblemListDTO[] = problems.map((p) => ({ id: p.id }));
+    res.status(200).json(problemsFixed);
   } catch (error) {
     res.status(503).send((error as Error).message);
   }

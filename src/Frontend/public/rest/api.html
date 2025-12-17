@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ProgCodeHub API</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>ProgCodeHub API(REST)</h1>
+
+    <section>
+      <h2>Problems</h2>
+
+      <button type="button" onclick="getAllProblems()">GET /problems</button>
+
+      <div>
+        <input id="problemTitle" placeholder="title" />
+        <input id="problemDesc" placeholder="description" />
+        <button type="button" onclick="createProblem()">POST /problems</button>
+      </div>
+
+      <div>
+        <input id="problemId" placeholder="problem id" type="number" />
+        <button type="button" onclick="getProblem()">GET /problems/:id</button>
+        <button type="button" onclick="editProblem()">PUT /problems/:id</button>
+        <button type="button" onclick="deleteProblem()">
+          DELETE /problems/:id
+        </button>
+      </div>
+
+      <button type="button" onclick="getProblemSubmissions()">
+        GET /problems/:id/submissions
+      </button>
+    </section>
+
+    <section>
+      <h2>Submissions</h2>
+
+      <button type="button" onclick="getAllSubmissions()">
+        GET /submissions
+      </button>
+
+      <div>
+        <input id="submissionProblemId" placeholder="problemId" type="number" />
+        <input id="submissionUser" placeholder="userName" />
+        <input id="submissionCode" placeholder="code" />
+        <button type="button" onclick="createSubmission()">
+          POST /submissions
+        </button>
+      </div>
+
+      <div>
+        <input id="submissionId" placeholder="submission id" type="number" />
+        <button type="button" onclick="getSubmission()">
+          GET /submissions/:id
+        </button>
+      </div>
+    </section>
+
+    <h2>Response</h2>
+    <pre id="output"></pre>
+    <script src="/ui/rest/app.js"></script>
+  </body>
+</html>

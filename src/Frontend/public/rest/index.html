@@ -13,17 +13,22 @@
     <script>
       fetch(`${API_BASE}/problems`)
         .then((res) => res.json())
-        .then((problems) => {
+        .then(async (problems) => {
           const ul = document.getElementById('problem-list');
-          problems.forEach((p) => {
+
+          for (const p of problems) {
+            // 追加リクエスト（N+1）
+            const res = await fetch(`${API_BASE}/problems/${p.id}`);
+            const detail = await res.json();
+
             const li = document.createElement('li');
             li.innerHTML = `
-            <a href="problem.html?id=${p.id}">
-              ${p.title}
-            </a>
-          `;
+          <a href="problem.html?id=${p.id}">
+            ${detail.title}
+          </a>
+        `;
             ul.appendChild(li);
-          });
+          }
         });
     </script>
   </body>

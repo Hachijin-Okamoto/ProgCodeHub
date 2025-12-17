@@ -24,12 +24,7 @@ const _notImplemented = <T>(): T => {
 /* eslint-disable @typescript-eslint/typedef */
 
 export const getAllProblems = async (): Promise<ProblemListDTO[]> => {
-  const problems = await prisma.problem.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
-  });
+  const problems = await prisma.problem.findMany({});
   return problems;
 };
 
@@ -49,6 +44,9 @@ export const createNewProblem = async (
 export const getIdProblem = async (id: number): Promise<Problem> => {
   const problem = await prisma.problem.findUnique({
     where: { id: Number(id) },
+    include: {
+      submissions: true,
+    },
   });
 
   if (!problem) {
