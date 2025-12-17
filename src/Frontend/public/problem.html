@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>問題詳細</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <p id="description"></p>
+
+    <a id="submissions-link">提出一覧を見る</a>
+
+    <script src="main.js"></script>
+    <script>
+      const id = getQueryParam('id');
+
+      fetch(`${API_BASE}/problems/${id}`)
+        .then((res) => res.json())
+        .then((problem) => {
+          document.getElementById('title').textContent = problem.title;
+          document.getElementById('description').textContent =
+            problem.description;
+          document.getElementById('submissions-link').href =
+            `submissions.html?problemId=${id}`;
+        });
+    </script>
+  </body>
+</html>
