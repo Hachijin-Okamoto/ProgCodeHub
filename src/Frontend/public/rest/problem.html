@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>問題詳細(REST)</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <div id="description"></div>
+
+    <a id="submissions-link">提出一覧を見る</a>
+
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      const id = getQueryParam('id');
+
+      fetch(`${API_BASE}/problems/${id}`)
+        .then((res) => res.json())
+        .then((problem) => {
+          document.getElementById('title').textContent = problem.title;
+
+          const html = marked.parse(problem.description);
+          document.getElementById('description').innerHTML = html;
+
+          document.getElementById('submissions-link').href =
+            `submissions.html?problemId=${id}`;
+        });
+    </script>
+  </body>
+</html>

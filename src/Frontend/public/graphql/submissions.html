@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>提出一覧(GraphQL)</title>
+
+    <!-- ★ これを追加 -->
+    <link rel="stylesheet" href="/ui/style.css" />
+  </head>
+  <body>
+    <h1>提出一覧(GraphQL)</h1>
+    <ul id="subs"></ul>
+
+    <script src="/ui/graphql/main.js"></script>
+    <script>
+      const problemId = getQueryParam('problemId');
+
+      gql(
+        `
+        query ($problemId: ID!) {
+          problem(id: $problemId) {
+            submissions {
+              id
+              userName
+            }
+          }
+        }
+        `,
+        { problemId },
+      ).then((data) => {
+        const ul = document.getElementById('subs');
+
+        data.problem.submissions.forEach((s) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="submission.html?id=${s.id}">${s.userName}</a>`;
+          ul.appendChild(li);
+        });
+      });
+    </script>
+  </body>
+</html>

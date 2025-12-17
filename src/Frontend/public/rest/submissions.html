@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>提出一覧(REST)</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <h1>提出一覧(REST)</h1>
+    <ul id="submission-list"></ul>
+
+    <script src="main.js"></script>
+    <script>
+      const problemId = getQueryParam('problemId');
+      const url = problemId
+        ? `${API_BASE}/problems/${problemId}/submissions`
+        : `${API_BASE}/submissions`;
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((submissions) => {
+          const ul = document.getElementById('submission-list');
+          submissions.forEach((s) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <a href="submission.html?id=${s.id}">
+              ${s.userName}
+            </a>
+          `;
+            ul.appendChild(li);
+          });
+        });
+    </script>
+  </body>
+</html>

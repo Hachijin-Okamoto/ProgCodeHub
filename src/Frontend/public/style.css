@@ -1,20 +1,32 @@
 body {
   font-family: sans-serif;
-  padding: 16px;
+  margin: 40px;
 }
-section {
-  margin-bottom: 16px;
-  padding-bottom: 8px;
+
+h1 {
+  margin-bottom: 20px;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+  padding: 8px;
   border-bottom: 1px solid #ccc;
 }
+
+a {
+  text-decoration: none;
+  color: #0366d6;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 button {
-  margin: 4px;
-}
-input {
-  margin: 4px;
-}
-pre {
-  background: #f5f5f5;
-  padding: 8px;
-  white-space: pre-wrap;
+  margin-top: 10px;
+  padding: 6px 12px;
 }
