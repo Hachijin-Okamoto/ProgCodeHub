@@ -1,5 +1,6 @@
-import { Problem, Submission } from './mockDB/entity';
-import { ProblemListDTO, SubmissionListDTO } from './dto';
+import { Problem } from './entities/problem';
+import { Submission } from './entities/submission';
+import { ProblemListDTO, SubmissionListDTO } from './entities/dto';
 import { prisma } from './lib/prisma';
 
 class NotImplementedError extends Error {

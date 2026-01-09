@@ -6,8 +6,9 @@ import {
   EditProblemDTO,
   ProblemListDTO,
   SubmissionListDTO,
-} from '../dto';
-import { Problem, Submission } from '../mockDB/entity';
+} from '../entities/dto';
+import { Problem } from '../entities/problem';
+import { Submission } from '../entities/submission';
 
 export const getAllProblems = async (
   _req: Request,
