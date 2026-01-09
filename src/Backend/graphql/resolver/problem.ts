@@ -1,4 +1,4 @@
-import { SubmissionListDTO } from '../../dto';
+import { SubmissionListDTO } from '../../entities/dto';
 import * as resourceService from '../../service';
 
 /* eslint-disable @typescript-eslint/typedef */

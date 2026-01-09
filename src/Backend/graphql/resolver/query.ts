@@ -1,5 +1,6 @@
-import { ProblemListDTO, SubmissionListDTO } from '../../dto';
-import { Problem, Submission } from '../../mockDB/entity';
+import { ProblemListDTO, SubmissionListDTO } from '../../entities/dto';
+import { Problem } from '../../entities/problem';
+import { Submission } from '../../entities/submission';
 import * as resourceService from '../../service';
 
 /* eslint-disable @typescript-eslint/typedef */
