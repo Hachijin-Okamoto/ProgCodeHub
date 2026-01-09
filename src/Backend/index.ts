@@ -3,7 +3,6 @@ import cors from 'cors';
 import { createHandler } from 'graphql-http/lib/use/express';
 import path from 'path';
 import { router } from './rest/router';
-import { ruruHTML } from 'ruru/server';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { makeExecutableSchema } from '@graphql-tools/schema';
@@ -19,9 +18,11 @@ app.use('/api', router);
 
 /* GraphQL */
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const typeDefs = mergeTypeDefs(
   loadFilesSync(path.join(__dirname, 'graphql', 'entity')),
 );
+// eslint-disable-next-line @typescript-eslint/typedef
 const resolvers = mergeResolvers(
   loadFilesSync(path.join(__dirname, 'graphql', 'resolver')),
 );
@@ -33,10 +34,14 @@ const schema: GraphQLSchema = makeExecutableSchema({
 
 app.all('/graphql', createHandler({ schema }));
 
+/* ruruを使う場合(importを書く)
+
 app.get('/ui/ruru', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
 });
+
+*/
 
 app.get('/ui/graphql-test', (_req, res) => {
   res.sendFile(
