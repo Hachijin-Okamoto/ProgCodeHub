@@ -1,4 +1,4 @@
-import { ProblemListDTO, SubmissionListDTO } from '../../entities/dto';
+import { ProblemListDTO } from '../../entities/dto';
 import { Problem } from '../../entities/problem';
 import { Submission } from '../../entities/submission';
 import * as resourceService from '../../service';
@@ -11,10 +11,6 @@ const resolvers = {
     },
     problem: async (_: unknown, args: { id: number }): Promise<Problem> => {
       return await resourceService.getIdProblem(args.id);
-    },
-
-    submissions: async (): Promise<SubmissionListDTO[]> => {
-      return await resourceService.getAllSubmissions();
     },
     submission: async (
       _: unknown,

@@ -16,8 +16,7 @@ export const getAllProblems = async (
 ): Promise<void> => {
   try {
     const problems: ProblemListDTO[] = await resourceService.getAllProblems();
-    const problemsFixed: ProblemListDTO[] = problems.map((p) => ({ id: p.id }));
-    res.status(200).json(problemsFixed);
+    res.status(200).json(problems);
   } catch (error) {
     res.status(503).send((error as Error).message);
   }
@@ -29,8 +28,7 @@ export const createNewProblem = async (
 ): Promise<void> => {
   try {
     const newProblemId: number = await resourceService.createNewProblem(
-      req.body.title,
-      req.body.description,
+      req.body,
     );
     res.status(201).json({ id: newProblemId });
   } catch (error) {
@@ -61,11 +59,7 @@ export const editIdProblem = async (
   res: Response,
 ): Promise<void> => {
   try {
-    await resourceService.editIdProblem(
-      Number(req.params.id),
-      req.body.title,
-      req.body.description,
-    );
+    await resourceService.editIdProblem(req.body);
     res.status(204).send();
   } catch (error) {
     if (error instanceof resourceService.NotFoundError) {
@@ -103,28 +97,13 @@ export const getAllSubmissionsFromIdProblem = async (
   }
 };
 
-export const getAllSubmissions = async (
-  _req: Request,
-  res: Response,
-): Promise<void> => {
-  try {
-    const submissions: SubmissionListDTO[] =
-      await resourceService.getAllSubmissions();
-    res.status(200).json(submissions);
-  } catch (error) {
-    res.status(503).send((error as Error).message);
-  }
-};
-
 export const createNewSubmission = async (
   req: Request<unknown, unknown, CreateSubmissionDTO>,
   res: Response,
 ): Promise<void> => {
   try {
     const newSubmissionId: number = await resourceService.createNewSubmission(
-      req.body.problemId,
-      req.body.userName,
-      req.body.code,
+      req.body,
     );
     res.status(201).json({ id: newSubmissionId });
   } catch (error) {
@@ -133,7 +112,7 @@ export const createNewSubmission = async (
 };
 
 export const getIdSubmission = async (
-  req: Request, // DTO作った方がいい？
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {

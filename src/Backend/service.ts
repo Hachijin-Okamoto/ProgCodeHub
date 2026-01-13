@@ -1,6 +1,12 @@
 import { Problem } from './entities/problem';
 import { Submission } from './entities/submission';
-import { ProblemListDTO, SubmissionListDTO } from './entities/dto';
+import {
+  CreateProblemDTO,
+  CreateSubmissionDTO,
+  EditProblemDTO,
+  ProblemListDTO,
+  SubmissionListDTO,
+} from './entities/dto';
 import { prisma } from './lib/prisma';
 
 class NotImplementedError extends Error {
@@ -26,17 +32,16 @@ const _notImplemented = <T>(): T => {
 
 export const getAllProblems = async (): Promise<ProblemListDTO[]> => {
   const problems = await prisma.problem.findMany({});
-  return problems;
+  return problems.map((p) => ({ id: p.id, title: p.title }));
 };
 
 export const createNewProblem = async (
-  title: string,
-  description: string,
+  dto: CreateProblemDTO,
 ): Promise<number> => {
   const newProblem = await prisma.problem.create({
     data: {
-      title,
-      description,
+      title: dto.title,
+      body: dto.body,
     },
   });
   return newProblem.id;
@@ -56,19 +61,14 @@ export const getIdProblem = async (id: number): Promise<Problem> => {
   return problem;
 };
 
-export const editIdProblem = async (
-  id: number,
-  title: string,
-  description: string,
-): Promise<number> => {
+export const editIdProblem = async (dto: EditProblemDTO): Promise<number> => {
   try {
     const problem = await prisma.problem.update({
-      where: { id },
-      data: { title, description },
+      where: { id: dto.id },
+      data: { title: dto.title, body: dto.body },
     });
     return problem.id;
   } catch {
-    // Prisma P2025 (Record not found)
     throw new NotFoundError('Problem not found');
   }
 };
@@ -93,22 +93,13 @@ export const getAllSubmissionsFromIdProblem = async (
   return submissions;
 };
 
-export const getAllSubmissions = async (): Promise<SubmissionListDTO[]> => {
-  const submissions = await prisma.submission.findMany({});
-
-  return submissions;
-};
-
 export const createNewSubmission = async (
-  problemId: number,
-  userName: string,
-  code: string,
+  dto: CreateSubmissionDTO,
 ): Promise<number> => {
   const newSubmission = await prisma.submission.create({
     data: {
-      problemId,
-      userName,
-      code,
+      problemId: dto.problemId,
+      body: dto.body,
     },
   });
   return newSubmission.id;
