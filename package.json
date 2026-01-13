@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "co-install": "concurrently \"npm:co-install:backend\" \"npm:co-install:frontend\"",
+    "co-install:backend": "npm --prefix backend install",
+    "co-install:frontend": "npm --prefix frontend install",
+    "prisma:generate": "npm --prefix backend run prisma:generate",
     "build": "concurrently \"npm:build:backend\" \"npm:build:frontend\"",
     "build:backend": "npm --prefix backend run build",
     "build:frontend": "npm --prefix frontend run build",
