@@ -1,5 +1,5 @@
-import { Sample } from './sample';
-import { Submission } from './submission';
+import { Sample } from '@samples/sample';
+import { Submission } from '@submissions/submission';
 
 export type Problem = {
   id: number;
