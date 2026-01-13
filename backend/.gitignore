@@ -1,0 +1,10 @@
+vscode/
+node_modules/
+dist/
+
+production/
+
+*.db
+*.sqlite
+*.sqlite3
+*.env
