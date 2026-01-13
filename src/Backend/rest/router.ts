@@ -5,7 +5,6 @@ import {
   deleteIdProblem,
   editIdProblem,
   getAllProblems,
-  getAllSubmissions,
   getAllSubmissionsFromIdProblem,
   getIdProblem,
   getIdSubmission,
@@ -31,8 +30,6 @@ router.put('/problems/:id', editIdProblem);
 router.delete('/problems/:id', deleteIdProblem);
 
 router.get('/problems/:id/submissions', getAllSubmissionsFromIdProblem);
-
-router.get('/submissions', getAllSubmissions);
 
 router.post('/submissions', createNewSubmission);
 

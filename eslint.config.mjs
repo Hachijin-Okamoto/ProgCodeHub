@@ -5,9 +5,6 @@ import { defineConfig } from "eslint/config";
 import unusedImports from "eslint-plugin-unused-imports";
 
 export default defineConfig([
-  {
-    ignores: ["src/modules/antlr/**"],
-  },
   
   js.configs.recommended,
 
