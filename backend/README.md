@@ -11,6 +11,6 @@ $ npm start
 
 ## 開発tips
 ```bash
-$ npm run prisma:generate # 初期起動時はこれをする
-$ npm run prisma:init # prismaファイルを再生成した場合 / スキーマを変更した場合はこれを実行する（データは消える）
+$ npm run prisma:generate # 初期起動時 / スキーマを変更した場合はこれをする
+$ npm run prisma:init # スキーマを変更した場合はこれを実行する（データは消える）
 ```

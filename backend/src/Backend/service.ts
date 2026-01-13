@@ -1,7 +1,9 @@
 import { Problem } from './entities/problem';
 import { Submission } from './entities/submission';
+import { Sample } from './entities/sample';
 import {
   CreateProblemDTO,
+  CreateSampleDTO,
   CreateSubmissionDTO,
   EditProblemDTO,
   ProblemListDTO,
@@ -42,6 +44,7 @@ export const createNewProblem = async (
     data: {
       title: dto.title,
       body: dto.body,
+      level: dto.level,
     },
   });
   return newProblem.id;
@@ -51,6 +54,7 @@ export const getIdProblem = async (id: number): Promise<Problem> => {
   const problem = await prisma.problem.findUnique({
     where: { id: Number(id) },
     include: {
+      samples: true,
       submissions: true,
     },
   });
@@ -65,7 +69,7 @@ export const editIdProblem = async (dto: EditProblemDTO): Promise<number> => {
   try {
     const problem = await prisma.problem.update({
       where: { id: dto.id },
-      data: { title: dto.title, body: dto.body },
+      data: { title: dto.title, body: dto.body, level: dto.level },
     });
     return problem.id;
   } catch {
@@ -81,6 +85,29 @@ export const deleteIdProblem = async (id: number): Promise<void> => {
   } catch {
     throw new NotFoundError('Problem not found');
   }
+};
+
+export const getAllSamplesFromIdProblem = async (
+  problemId: number,
+): Promise<Sample[]> => {
+  const samples = await prisma.sample.findMany({
+    where: { problemId },
+  });
+
+  return samples;
+};
+
+export const createNewSample = async (
+  dto: CreateSampleDTO,
+): Promise<number> => {
+  const newSample = await prisma.sample.create({
+    data: {
+      problemId: dto.problemId,
+      input: dto.input,
+      output: dto.output,
+    },
+  });
+  return newSample.id;
 };
 
 export const getAllSubmissionsFromIdProblem = async (
@@ -100,6 +127,8 @@ export const createNewSubmission = async (
     data: {
       problemId: dto.problemId,
       body: dto.body,
+      language: dto.language,
+      result: dto.result,
     },
   });
   return newSubmission.id;

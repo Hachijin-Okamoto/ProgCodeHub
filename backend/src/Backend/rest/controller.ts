@@ -6,9 +6,11 @@ import {
   EditProblemDTO,
   ProblemListDTO,
   SubmissionListDTO,
+  CreateSampleDTO,
 } from '../entities/dto';
 import { Problem } from '../entities/problem';
 import { Submission } from '../entities/submission';
+import { Sample } from '../entities/sample';
 
 export const getAllProblems = async (
   _req: Request,
@@ -77,6 +79,32 @@ export const deleteIdProblem = async (
   try {
     await resourceService.deleteIdProblem(Number(req.params.id));
     res.status(204).send();
+  } catch (error) {
+    res.status(503).send((error as Error).message);
+  }
+};
+
+export const getAllSamplesFromIdProblem = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const samples: Sample[] = await resourceService.getAllSamplesFromIdProblem(
+      Number(req.params.id),
+    );
+    res.status(200).json(samples);
+  } catch (error) {
+    res.status(503).send((error as Error).message);
+  }
+};
+
+export const createNewSample = async (
+  req: Request<unknown, unknown, CreateSampleDTO>,
+  res: Response,
+): Promise<void> => {
+  try {
+    const newSampleId: number = await resourceService.createNewSample(req.body);
+    res.status(201).json({ id: newSampleId });
   } catch (error) {
     res.status(503).send((error as Error).message);
   }

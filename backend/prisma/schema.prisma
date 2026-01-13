@@ -13,10 +13,10 @@ datasource db {
 }
 
 model Problem {
-  id          Int          @id @default(autoincrement())
-  title       String
-  body        String
-  level       Int
+  id    Int    @id @default(autoincrement())
+  title String
+  body  String
+  level Int
 
   samples     Sample[]
   submissions Submission[]
@@ -32,7 +32,7 @@ model Sample {
 }
 
 model Submission {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   problemId Int
   body      String
   language  String
