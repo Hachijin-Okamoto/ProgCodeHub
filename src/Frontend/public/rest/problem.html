@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1 id="title"></h1>
-    <div id="description"></div>
+    <div id="body"></div>
 
     <a id="submissions-link">提出一覧を見る</a>
 
@@ -21,8 +21,8 @@
         .then((problem) => {
           document.getElementById('title').textContent = problem.title;
 
-          const html = marked.parse(problem.description);
-          document.getElementById('description').innerHTML = html;
+          const html = marked.parse(problem.body);
+          document.getElementById('body').innerHTML = html;
 
           document.getElementById('submissions-link').href =
             `submissions.html?problemId=${id}`;
