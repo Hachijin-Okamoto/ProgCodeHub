@@ -10,12 +10,18 @@ function ProblemList() {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>問題一覧</h1>
-      <ul>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">問題一覧</h1>
+
+      <ul className="space-y-3">
         {problems.map(p => (
           <li key={p.id}>
-            <Link to={`/problems/${p.id}`}>{p.title}</Link>
+            <Link
+              to={`/problems/${p.id}`}
+              className="block bg-white p-4 rounded-lg shadow hover:shadow-md transition"
+            >
+              {p.title}
+            </Link>
           </li>
         ))}
       </ul>
