@@ -2,6 +2,7 @@ type Query {
     problems: [Problem]!
     problem(id: ID!): Problem!
 
-    submissions: [Submission]!
+    samples(id: ID!): Sample!
     submission(id: ID!): Submission!
+
 }

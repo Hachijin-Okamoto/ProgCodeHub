@@ -1,0 +1,6 @@
+type Sample {
+    id: ID!
+    problemId: ID!
+    input: String!
+    output: String!
+}

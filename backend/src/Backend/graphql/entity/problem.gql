@@ -1,7 +1,9 @@
 type Problem {
     id: ID!
     title: String!
-    description: String!
+    body: String!
+    level: Int!
 
+    samples: [Sample]!
     submissions: [Submission]!
 }

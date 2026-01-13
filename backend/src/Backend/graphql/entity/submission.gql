@@ -1,6 +1,7 @@
 type Submission {
     id: ID!
     problemId: ID!
-    userName: String!
-    code: String!
+    body: String!
+    language: String!
+    result: Boolean!
 }
