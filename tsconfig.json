@@ -41,6 +41,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules", "dist", "prisma.config.ts", "production"  ]
+  "exclude": ["node_modules", "dist", "prisma.config.ts", "production", "frontend"]
 }
 
