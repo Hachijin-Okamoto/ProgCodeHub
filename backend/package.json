@@ -1,6 +1,6 @@
 {
-  "name": "progcodehub",
-  "version": "1.2.0",
+  "name": "progcodehub-backend",
+  "version": "2.0.0",
   "description": "- プログラミングの教育現場で、問題とそれに対して提出されたコードを閲覧するアプリ - REST API / GraphQLの性能比較用アプリでもあります。",
   "main": "index.js",
   "scripts": {
