@@ -49,6 +49,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules", "dist", "prisma.config.ts", "production", "frontend", "src/Backend/graphql"]
+  "exclude": ["node_modules", "dist", "prisma.config.ts", "production", "frontend"]
 }
 

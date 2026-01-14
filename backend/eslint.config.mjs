@@ -5,11 +5,6 @@ import { defineConfig } from "eslint/config";
 import unusedImports from "eslint-plugin-unused-imports";
 
 export default defineConfig([
-  
-  // src/Backend/graphql/** はignoreする
-  {
-    ignores: ["src/Backend/graphql/**"],
-  },
 
   js.configs.recommended,
 
