@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchProblems, type Problem } from "../api";
+import { fetchProblems} from "../api";
+import { type ProblemListDTO } from "../dto";
+import { LEVEL_BADGE_CLASS } from "../main";
 
 function ProblemList() {
-  const [problems, setProblems] = useState<Problem[]>([]);
+  const [problems, setProblems] = useState<ProblemListDTO[]>([]);
 
   useEffect(() => {
     fetchProblems().then(setProblems);
@@ -20,7 +22,17 @@ function ProblemList() {
               to={`/problems/${p.id}`}
               className="block bg-white p-4 rounded-lg shadow hover:shadow-md transition"
             >
-              {p.title}
+              <div className="flex justify-between items-center">
+  <span className="font-medium">{p.title}</span>
+
+<span
+  className={`text-xs px-2 py-1 rounded-full font-medium ${
+    LEVEL_BADGE_CLASS[p.level] ?? "bg-gray-100 text-gray-500"
+  }`}
+>
+    Lv.{p.level}
+  </span>
+</div>
             </Link>
           </li>
         ))}

@@ -1,3 +1,5 @@
+import type { ProblemListDTO } from "./dto";
+
 const API_BASE = "http://localhost:8000/api";
 
 export type Problem = {
@@ -16,7 +18,7 @@ export type ProblemDetail = Problem & {
   submissions: Submission[];
 };
 
-export async function fetchProblems(): Promise<Problem[]> {
+export async function fetchProblems(): Promise<ProblemListDTO[]> {
   const res = await fetch(`${API_BASE}/problems`);
   return res.json();
 }
