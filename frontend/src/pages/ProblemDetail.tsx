@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProblem } from '../services/api';
 import { type ProblemDetailDTO } from '../services/dto';
@@ -7,23 +7,43 @@ import LinkLine from './components/LinkLine';
 import LevelDisplay from './components/LevelDisplay';
 import LanguageBadge from './components/LanguageBadge';
 import SourceCodeModule from './components/SourceCodeModule';
+import SubmissionFilterToggle from './components/SubmissionFilterToggle';
 
 function ProblemDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [problem, setProblem] = useState<ProblemDetailDTO | null>(null);
   const [showSamples, setShowSamples] = useState(true);
 
-  const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
-
-  useEffect(() => {
-    if (!problem) return;
-    setCurrentSubmissionIndex(problem.submissions.length - 1);
-  }, [problem]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (!id) return;
     fetchProblem(Number(id)).then(setProblem);
   }, [id]);
+
+  /* Success/Failure フィルタ */
+
+  type SubmissionFilter = 'all' | 'success' | 'failure';
+
+  const [filter, setFilter] = useState<SubmissionFilter>('all');
+
+  const onChangeFilter = (v: SubmissionFilter) => {
+    setFilter(v);
+    setCurrentIndex(0);
+  };
+
+  const filteredSubmissions = useMemo(() => {
+    if (!problem) return [];
+
+    switch (filter) {
+      case 'success':
+        return problem.submissions.filter((s) => s.result);
+      case 'failure':
+        return problem.submissions.filter((s) => !s.result);
+      default:
+        return problem.submissions;
+    }
+  }, [problem, filter]);
 
   if (!problem) {
     return <div className="p-6">Loading...</div>;
@@ -99,10 +119,17 @@ function ProblemDetailPage() {
           <p className="text-gray-500">まだ提出がありません</p>
         ) : (
           (() => {
-            const s = problem.submissions[currentSubmissionIndex];
+            const s = filteredSubmissions[currentIndex];
 
             return (
               <div className="w-full max-w-6xl bg-white p-4 rounded-lg shadow space-y-4">
+                <div className="flex gap-2 mb-3">
+                  <SubmissionFilterToggle
+                    value={filter}
+                    onChange={onChangeFilter}
+                  />
+                </div>
+
                 {/* メタ情報バー */}
                 <div className="grid grid-cols-[1fr_auto] items-center">
                   {/* language */}
@@ -126,28 +153,24 @@ function ProblemDetailPage() {
                 {/* ナビゲーション */}
                 <div className="flex justify-between items-center">
                   <button
-                    onClick={() =>
-                      setCurrentSubmissionIndex((i) => Math.max(0, i - 1))
-                    }
-                    disabled={currentSubmissionIndex === 0}
+                    onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
+                    disabled={currentIndex === 0}
                     className="text-sm px-3 py-1 rounded border disabled:opacity-40"
                   >
                     ← 前
                   </button>
 
                   <span className="text-sm text-gray-500">
-                    {currentSubmissionIndex + 1} / {problem.submissions.length}
+                    {currentIndex + 1} / {filteredSubmissions.length}
                   </span>
 
                   <button
                     onClick={() =>
-                      setCurrentSubmissionIndex((i) =>
-                        Math.min(problem.submissions.length - 1, i + 1),
+                      setCurrentIndex((i) =>
+                        Math.min(filteredSubmissions.length - 1, i + 1),
                       )
                     }
-                    disabled={
-                      currentSubmissionIndex === problem.submissions.length - 1
-                    }
+                    disabled={currentIndex === filteredSubmissions.length - 1}
                     className="text-sm px-3 py-1 rounded border disabled:opacity-40"
                   >
                     次 →
