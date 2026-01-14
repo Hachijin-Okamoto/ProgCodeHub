@@ -1,6 +1,6 @@
-import type { ProblemListDTO } from "./dto";
+import type { ProblemListDTO } from './dto';
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = 'http://localhost:8000/api';
 
 export type Problem = {
   id: number;

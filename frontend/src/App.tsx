@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import ProblemList from "./pages/ProblemList";
-import ProblemDetail from "./pages/ProblemDetail";
+import { Routes, Route } from 'react-router-dom';
+import ProblemList from './pages/ProblemList';
+import ProblemDetail from './pages/ProblemDetail';
 
 function App() {
   return (
