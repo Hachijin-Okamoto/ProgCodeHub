@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { fetchProblem, type ProblemDetail as ProblemType } from "../api";
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { fetchProblem, type ProblemDetail as ProblemType } from '../api';
 
 function ProblemDetail() {
   const { id } = useParams<{ id: string }>();
@@ -9,18 +9,14 @@ function ProblemDetail() {
 
   useEffect(() => {
     if (!id) return;
-    fetchProblem(Number(id)).then(p => {
+    fetchProblem(Number(id)).then((p) => {
       setProblem(p);
       setIndex(0);
     });
   }, [id]);
 
   if (!problem) {
-    return (
-      <div className="max-w-4xl mx-auto p-6">
-        Loading...
-      </div>
-    );
+    return <div className="max-w-4xl mx-auto p-6">Loading...</div>;
   }
 
   const submissions = problem.submissions;
@@ -52,7 +48,7 @@ function ProblemDetail() {
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setIndex(i => i - 1)}
+              onClick={() => setIndex((i) => i - 1)}
               disabled={index === 0}
               className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
             >
@@ -64,7 +60,7 @@ function ProblemDetail() {
             </span>
 
             <button
-              onClick={() => setIndex(i => i + 1)}
+              onClick={() => setIndex((i) => i + 1)}
               disabled={index === submissions.length - 1}
               className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
             >

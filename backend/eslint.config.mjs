@@ -5,7 +5,7 @@ import { defineConfig } from "eslint/config";
 import unusedImports from "eslint-plugin-unused-imports";
 
 export default defineConfig([
-  
+
   js.configs.recommended,
 
   ...tseslint.configs.recommended,

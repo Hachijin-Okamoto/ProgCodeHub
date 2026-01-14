@@ -7,6 +7,7 @@ import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { GraphQLSchema } from 'graphql';
+import { ruruHTML } from 'ruru/server';
 
 const PORT: number = 8000;
 const app: express.Express = express();
@@ -34,14 +35,10 @@ const schema: GraphQLSchema = makeExecutableSchema({
 
 app.all('/graphql', createHandler({ schema }));
 
-/* ruruを使う場合(importを書く)
-
 app.get('/ui/ruru', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
 });
-
-*/
 
 app.get('/ui/graphql-test', (_req, res) => {
   res.sendFile(

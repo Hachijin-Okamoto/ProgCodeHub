@@ -1,24 +1,18 @@
 export type ProblemListDTO = {
   id: number;
   title: string;
+  body: string;
+  level: number;
 };
 
 export type CreateProblemDTO = {
   title: string;
   body: string;
+  level: number;
 };
 
 export type EditProblemDTO = {
-  id: number;
   title: string;
   body: string;
-};
-
-export type SubmissionListDTO = {
-  id: number;
-};
-
-export type CreateSubmissionDTO = {
-  problemId: number;
-  body: string;
+  level: number;
 };

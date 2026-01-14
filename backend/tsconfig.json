@@ -12,6 +12,14 @@
     "lib": ["esnext"],
     "types": ["node"],
 
+    // Module Resolution
+    "baseUrl": ".",
+    "paths": {
+      "@problems/*": ["src/Backend/resources/problems/*"],
+      "@submissions/*": ["src/Backend/resources/submissions/*"],
+      "@samples/*": ["src/Backend/resources/samples/*"],
+    },
+
     // Other Outputs
     "sourceMap": false,
     "declaration": false,
