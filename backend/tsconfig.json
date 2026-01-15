@@ -12,7 +12,7 @@
     "lib": ["esnext"],
     "types": ["node"],
 
-    // Module Resolution
+    // Import Alias Settings
     "baseUrl": ".",
     "paths": {
       "@problems/*": ["src/Backend/resources/problems/*"],

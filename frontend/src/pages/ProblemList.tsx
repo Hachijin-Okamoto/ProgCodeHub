@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchProblems } from '../services/api';
 import { type ProblemListDTO } from '../services/dto';
 import { styles } from '../styles';
-import LevelDisplay from './components/LevelDisplay';
+import LevelBadge from '@molecules/LevelBadge';
 
 function ProblemList() {
   const [problems, setProblems] = useState<ProblemListDTO[]>([]);
@@ -26,7 +26,7 @@ function ProblemList() {
               <div className="flex justify-between items-center">
                 <span className="font-medium">{p.title}</span>
 
-                <LevelDisplay level={p.level} />
+                <LevelBadge level={p.level} />
               </div>
             </Link>
           </li>

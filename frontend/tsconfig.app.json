@@ -8,6 +8,16 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    /* Import Alias Settings */
+    "baseUrl": ".",
+    "paths": {
+      "@atoms/*": ["src/pages/components/atoms/*"],
+      "@molecules/*": ["src/pages/components/molecules/*"],
+      "@organisms/*": ["src/pages/components/organisms/*"],
+      "@templates/*": ["src/pages/components/templates/*"],
+      "@pages/*": ["src/pages/*"],
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

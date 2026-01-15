@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 import { fetchProblem } from '../services/api';
 import { type ProblemDetailDTO } from '../services/dto';
 import { styles } from '../styles';
-import LinkLine from './components/LinkLine';
-import LevelDisplay from './components/LevelDisplay';
-import LanguageBadge from './components/LanguageBadge';
-import SourceCodeModule from './components/SourceCodeModule';
-import SubmissionFilterToggle from './components/SubmissionFilterToggle';
+import LinkLine from '@atoms/LinkLine';
+import LevelBadge from '@molecules/LevelBadge';
+import LanguageBadge from '@molecules/LanguageBadge';
+import CodeBlock from '@atoms/CodeBlock';
+import SubmissionFilterToggleButton from '@molecules/SubmissionFilterToggleButton';
+import IndexNavigation from '@molecules/IndexNavigation';
 
 function ProblemDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -56,7 +57,7 @@ function ProblemDetailPage() {
       {/* タイトル */}
       <div className="flex items-center gap-3">
         <h1 className="text-3xl font-bold">{problem.title}</h1>
-        <LevelDisplay level={problem.level} />
+        <LevelBadge level={problem.level} />
       </div>
 
       {/* 問題文 */}
@@ -124,9 +125,9 @@ function ProblemDetailPage() {
             return (
               <div className="w-full max-w-6xl bg-white p-4 rounded-lg shadow space-y-4">
                 <div className="flex gap-2 mb-3">
-                  <SubmissionFilterToggle
+                  <SubmissionFilterToggleButton
                     value={filter}
-                    onChange={onChangeFilter}
+                    onClick={onChangeFilter}
                   />
                 </div>
 
@@ -148,34 +149,18 @@ function ProblemDetailPage() {
                 </div>
 
                 {/* 提出コード */}
-                <SourceCodeModule code={s.body} language={s.language} />
+                <CodeBlock code={s.body} language={s.language} />
 
-                {/* ナビゲーション */}
-                <div className="flex justify-between items-center">
-                  <button
-                    onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-                    disabled={currentIndex === 0}
-                    className="text-sm px-3 py-1 rounded border disabled:opacity-40"
-                  >
-                    ← 前
-                  </button>
-
-                  <span className="text-sm text-gray-500">
-                    {currentIndex + 1} / {filteredSubmissions.length}
-                  </span>
-
-                  <button
-                    onClick={() =>
-                      setCurrentIndex((i) =>
-                        Math.min(filteredSubmissions.length - 1, i + 1),
-                      )
-                    }
-                    disabled={currentIndex === filteredSubmissions.length - 1}
-                    className="text-sm px-3 py-1 rounded border disabled:opacity-40"
-                  >
-                    次 →
-                  </button>
-                </div>
+                <IndexNavigation
+                  index={currentIndex}
+                  total={filteredSubmissions.length}
+                  onPrev={() => setCurrentIndex((i) => Math.max(0, i - 1))}
+                  onNext={() =>
+                    setCurrentIndex((i) =>
+                      Math.min(filteredSubmissions.length - 1, i + 1),
+                    )
+                  }
+                />
               </div>
             );
           })()
