@@ -1,4 +1,4 @@
-# ProgCodeHub - backend
+# ProgCodeHub - frontend
 
 ## 実行方法
 ※本ディレクトリのみでの実行は非推奨です。<br>
