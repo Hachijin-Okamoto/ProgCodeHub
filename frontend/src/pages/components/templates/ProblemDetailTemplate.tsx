@@ -18,6 +18,10 @@ export default function ProblemDetailTemplate({
       <LinkLine to="/" text="← 問題一覧へ" />
       <ProblemTitle title={problem.title} level={problem.level} />
       <TextDisplay title="問題文" body={problem.body} />
+      <LinkLine
+        to={`/problems/${problem.id}/edit`}
+        text="問題を編集/削除する"
+      />
       <SampleDisplay samples={problem.samples} />
       <SubmissionDisplay problem={problem} />
     </div>

@@ -2,6 +2,7 @@ import type {
   ProblemListDTO,
   ProblemDetailDTO,
   CreateProblemDTO,
+  EditProblemDTO,
 } from '../dto';
 
 const API_BASE = 'http://localhost:8000/api';
@@ -27,4 +28,23 @@ export async function createProblem(
     body: JSON.stringify(data),
   });
   return res.json();
+}
+
+export async function updateProblem(
+  id: number,
+  data: EditProblemDTO,
+): Promise<void> {
+  await fetch(`${API_BASE}/problems/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteProblem(id: number): Promise<void> {
+  await fetch(`${API_BASE}/problems/${id}`, {
+    method: 'DELETE',
+  });
 }
