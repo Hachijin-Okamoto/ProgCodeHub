@@ -1,13 +1,27 @@
-import type { ProblemListDTO, ProblemDetailDTO } from './dto';
+import * as rest from './rest/rest-api';
+import * as graphql from './graphql/graphql-api';
+import { useSearchParams } from 'react-router-dom';
 
-const API_BASE = 'http://localhost:8000/api';
+export type ApiMode = 'rest' | 'graphql';
 
-export async function fetchProblems(): Promise<ProblemListDTO[]> {
-  const res = await fetch(`${API_BASE}/problems`);
-  return res.json();
+export function fetchProblems(mode: ApiMode) {
+  return mode === 'rest' ? rest.fetchProblems() : graphql.fetchProblems();
 }
 
-export async function fetchProblem(id: number): Promise<ProblemDetailDTO> {
-  const res = await fetch(`${API_BASE}/problems/${id}`);
-  return res.json();
+export function fetchProblem(mode: ApiMode, problemId: number) {
+  return mode === 'rest'
+    ? rest.fetchProblem(problemId)
+    : graphql.fetchProblem(problemId);
+}
+
+export function useApiMode(): [ApiMode, (m: ApiMode) => void] {
+  const [params, setParams] = useSearchParams();
+
+  const mode = (params.get('api') as ApiMode) ?? 'rest';
+
+  const setMode = (m: ApiMode) => {
+    setParams({ api: m });
+  };
+
+  return [mode, setMode];
 }
