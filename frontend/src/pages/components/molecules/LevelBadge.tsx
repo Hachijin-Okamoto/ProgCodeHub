@@ -1,4 +1,4 @@
-import Badge from '@atoms/Badges';
+import Badge from '@atoms/Badge';
 
 const levelStyleMap: Record<number, string> = {
   1: 'bg-blue-100 text-blue-700',

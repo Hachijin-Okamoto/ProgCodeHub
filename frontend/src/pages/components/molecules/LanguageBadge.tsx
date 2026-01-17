@@ -1,4 +1,4 @@
-import Badge from '@atoms/Badges';
+import Badge from '@atoms/Badge';
 
 const languageStyleMap: Record<string, string> = {
   c: 'bg-blue-100 text-blue-700',
