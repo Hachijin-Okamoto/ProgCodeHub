@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import { fetchProblems } from '../services/api';
-import { type ProblemListDTO } from '../services/dto';
+import { useApiMode } from '../services/api';
 import ProblemListTemplate from '@templates/ProblemListTemplate';
+import { useProblems } from 'src/hook';
+import ApiModeToggleButton from '@molecules/ApiModeToggleButton';
 
 export default function ProblemListPage() {
-  const [problems, setProblems] = useState<ProblemListDTO[]>([]);
+  const [apiMode, setApiMode] = useApiMode();
+  const { problems } = useProblems(apiMode);
 
-  useEffect(() => {
-    fetchProblems().then(setProblems);
-  }, []);
-
-  return <ProblemListTemplate problems={problems} />;
+  return (
+    <>
+      <ApiModeToggleButton value={apiMode} onClick={setApiMode} />
+      <ProblemListTemplate problems={problems} />
+    </>
+  );
 }

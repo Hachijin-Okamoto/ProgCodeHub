@@ -1,23 +1,24 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProblem } from '../services/api';
-import { type ProblemDetailDTO } from '../services/dto';
+import { useProblem } from '../hook';
 import ProblemDetailTemplate from '@templates/ProblemDetailTemplate';
+import { useApiMode } from 'src/services/api';
+import ApiModeToggleButton from '@molecules/ApiModeToggleButton';
 
 function ProblemDetailPage() {
+  const [apiMode, setApiMode] = useApiMode();
   const { id } = useParams<{ id: string }>();
-  const [problem, setProblem] = useState<ProblemDetailDTO | null>(null);
-
-  useEffect(() => {
-    if (!id) return;
-    fetchProblem(Number(id)).then(setProblem);
-  }, [id]);
+  const { problem } = useProblem(apiMode, Number(id));
 
   if (!problem) {
     return <div className="p-6">Loading...</div>;
   }
 
-  return <ProblemDetailTemplate problem={problem} />;
+  return (
+    <>
+      <ApiModeToggleButton value={apiMode} onClick={setApiMode} />
+      <ProblemDetailTemplate problem={problem} />
+    </>
+  );
 }
 
 export default ProblemDetailPage;

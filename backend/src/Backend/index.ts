@@ -33,7 +33,7 @@ const schema: GraphQLSchema = makeExecutableSchema({
   resolvers,
 });
 
-app.all('/graphql', createHandler({ schema }));
+app.all('/api/graphql', createHandler({ schema }));
 
 app.get('/ui/ruru', (_req, res) => {
   res.type('html');
