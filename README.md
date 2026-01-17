@@ -5,7 +5,7 @@
 ## 実行方法
 1. `backend/.env`に`DATABASE_URL=`の形でdbへのパスを記述
 ```bash
-DATABASE_URL="file:./dev.db" # 例
+DATABASE_URL="file:./dev.db" # 例（この書き方以外での動作は未検証）
 ```
 2. ルートディレクトリで以下のコマンドを実行
 ```bash
