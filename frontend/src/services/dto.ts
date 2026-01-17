@@ -27,3 +27,15 @@ export type SampleListDTO = {
   input: string;
   output: string;
 };
+
+export type CreateProblemDTO = {
+  title: string;
+  body: string;
+  level: number;
+};
+
+export type EditProblemDTO = {
+  title: string;
+  body: string;
+  level: number;
+};
