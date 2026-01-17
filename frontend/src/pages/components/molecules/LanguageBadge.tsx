@@ -1,3 +1,5 @@
+import Badge from '@atoms/Badge';
+
 const languageStyleMap: Record<string, string> = {
   c: 'bg-blue-100 text-blue-700',
   cpp: 'bg-indigo-100 text-indigo-700',
@@ -9,21 +11,18 @@ const languageStyleMap: Record<string, string> = {
 
 const defaultLanguageStyle = 'bg-gray-100 text-gray-700';
 
-function LanguageBadge({ language }: { language: string }) {
+type LanguageBadgeProps = {
+  language: string;
+};
+
+export default function LanguageBadge({ language }: LanguageBadgeProps) {
+  const style =
+    languageStyleMap[language.toLowerCase()] || defaultLanguageStyle;
+
   return (
-    <div>
+    <div className="flex">
       Language:
-      <span
-        className={`
-    px-3 py-1 rounded-full
-    text-sm font-semibold
-    ${languageStyleMap[language.toLowerCase()] ?? defaultLanguageStyle}
-  `}
-      >
-        {language}
-      </span>
+      <Badge text={language} className={style} />
     </div>
   );
 }
-
-export default LanguageBadge;

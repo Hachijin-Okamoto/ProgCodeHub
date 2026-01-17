@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import ProblemList from './pages/ProblemList';
-import ProblemDetail from './pages/ProblemDetail';
+import ProblemListPage from '@pages/ProblemListPage';
+import ProblemDetailPage from './pages/ProblemDetailPage';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<ProblemList />} />
-      <Route path="/problems/:id" element={<ProblemDetail />} />
+      <Route path="/" element={<ProblemListPage />} />
+      <Route path="/problems/:id" element={<ProblemDetailPage />} />
     </Routes>
   );
 }

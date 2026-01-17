@@ -21,3 +21,9 @@ export type ProblemDetailDTO = {
     output: string;
   }[];
 };
+
+export type SampleListDTO = {
+  id: number;
+  input: string;
+  output: string;
+};

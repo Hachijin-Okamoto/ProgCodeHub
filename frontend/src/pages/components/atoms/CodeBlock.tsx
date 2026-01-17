@@ -14,13 +14,12 @@ function normalizeLanguage(lang: string): string {
   return 'text';
 }
 
-function SourceCodeModule({
-  code,
-  language,
-}: {
+type CodeBlockProps = {
   code: string;
   language: string;
-}) {
+};
+
+export default function CodeBlock({ code, language }: CodeBlockProps) {
   return (
     <div className="h-128 overflow-auto rounded-lg">
       <SyntaxHighlighter
@@ -39,5 +38,3 @@ function SourceCodeModule({
     </div>
   );
 }
-
-export default SourceCodeModule;
